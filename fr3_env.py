@@ -1,9 +1,7 @@
 import copy
 import pathlib
-from pdb import set_trace
 from typing import Optional
 
-import gymnasium as gym
 import numpy as np
 import pybullet as p
 import pybullet_data
@@ -24,7 +22,7 @@ class FR3Env(Env):
         else:
             self.client = p.connect(p.DIRECT)
 
-        p.setGravity(0, 0, 0)
+        p.setGravity(0, 0, -9.81)
         p.setTimeStep(1 / 240)
 
         # Load plane

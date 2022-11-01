@@ -37,7 +37,7 @@ def main():
     p_end = np.array([[0.2], [-0.4], [0.2]])
 
     # get initial rotation and position
-    q, dq, R_start, _p_start = info["q"], info["dq"], info["R_EE"], info["P_EE"]
+    dq, R_start, _p_start = info["dq"], info["R_EE"], info["P_EE"]
     p_start = _p_start[:, np.newaxis]
 
     # Get target orientation based on initial orientation
@@ -106,7 +106,7 @@ def main():
         Kp = 10 * np.eye(9)
         Kd = 0.1 * np.eye(9)
 
-        tau = Kp @ delta_q + Kd @ delta_dq
+        tau = Kp @ delta_q + Kd @ delta_dq + info["G"][:, np.newaxis]
 
         # Set control for the two fingers to zero
         tau[-1] = 0.0
@@ -114,7 +114,7 @@ def main():
 
         # Send joint commands to motor
         info = env.step(tau)
-        q, dq = info["q"], info["dq"]
+        dq = info["q"]
 
         if i % 500 == 0:
             print(

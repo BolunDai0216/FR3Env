@@ -243,7 +243,13 @@
     <dynamics D="1" K="7000" damping="0.003" friction="0.0" mu_coulomb="0" mu_viscous="16"/>
   </joint>
 
-  <link name="fr3_link8"/>
+  <link name="fr3_link8">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0"/>
+      <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+    </inertial>
+  </link>
   
   <joint name="fr3_joint8" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.107"/>
@@ -279,7 +285,14 @@
   </link>
 
   <!-- Define the hand_tcp frame -->
-  <link name="fr3_hand_tcp"/>
+  <link name="fr3_hand_tcp">
+    <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="0.0"/>
+        <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+    </inertial>
+  </link>
+  
   <joint name="fr3_hand_tcp_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.1034"/>
     <parent link="fr3_hand"/>
