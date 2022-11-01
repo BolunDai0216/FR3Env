@@ -8,12 +8,15 @@
   <link name="fr3_link0">
     <visual>
       <geometry>
-        <mesh filename="meshes/visual/link0.dae"/>
+        <mesh filename="./meshes/visual/link0.obj"/>
       </geometry>
+      <material name="panda_white">
+        <color rgba="1. 1. 1. 1."/>
+      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="meshes/collision/link0.stl"/>
+        <mesh filename="./meshes/collision/link0.stl"/>
       </geometry>
     </collision>
     <inertial>
@@ -26,12 +29,15 @@
   <link name="fr3_link1">
     <visual>
       <geometry>
-        <mesh filename="meshes/visual/link1.dae"/>
+        <mesh filename="./meshes/visual/link1.obj"/>
       </geometry>
+      <material name="panda_white">
+        <color rgba="1. 1. 1. 1."/>
+      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="meshes/collision/link1.stl"/>
+        <mesh filename="./meshes/collision/link1.stl"/>
       </geometry>
     </collision>
     <inertial>
@@ -40,8 +46,7 @@
       <inertia ixx="0.70337" ixy="-0.000139" ixz="0.006772" iyy="0.70661" iyz="0.019169" izz="0.009117"/>
     </inertial>
   </link>
-  
-  
+
   <joint name="fr3_joint1" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0.333"/>
     <parent link="fr3_link0"/>
@@ -51,16 +56,19 @@
     <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.3093" soft_upper_limit="2.3093"/>
     <dynamics D="1" K="7000" damping="0.003" friction="0.0" mu_coulomb="0" mu_viscous="16"/>
   </joint>
-  
+
   <link name="fr3_link2">
     <visual>
       <geometry>
-        <mesh filename="meshes/visual/link2.dae"/>
+        <mesh filename="./meshes/visual/link2.obj"/>
       </geometry>
+      <material name="panda_white">
+        <color rgba="1. 1. 1. 1."/>
+      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="meshes/collision/link2.stl"/>
+        <mesh filename="./meshes/collision/link2.stl"/>
       </geometry>
     </collision>
     <inertial>
@@ -69,7 +77,7 @@
       <inertia ixx="0.007962" ixy="-0.003925" ixz="0.010254" iyy="0.02811" iyz="0.000704" izz="0.025995"/>
     </inertial>
   </link>
-  
+
   <joint name="fr3_joint2" type="revolute">
     <origin rpy="-1.5707963267948966 0 0" xyz="0 0 0"/>
     <parent link="fr3_link1"/>
@@ -79,16 +87,19 @@
     <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-1.5133" soft_upper_limit="1.5133"/>
     <dynamics D="1" K="7000" damping="0.003" friction="0.0" mu_coulomb="0" mu_viscous="16"/>
   </joint>
-   
+  
   <link name="fr3_link3">
     <visual>
       <geometry>
-        <mesh filename="meshes/visual/link3.dae"/>
+        <mesh filename="./meshes/visual/link3.obj"/>
       </geometry>
+      <material name="panda_white">
+        <color rgba="1. 1. 1. 1."/>
+      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="meshes/collision/link3.stl"/>
+        <mesh filename="./meshes/collision/link3.stl"/>
       </geometry>
     </collision>
     <inertial>
@@ -97,7 +108,7 @@
       <inertia ixx="0.037242" ixy="-0.004761" ixz="-0.011396" iyy="0.036155" iyz="-0.012805" izz="0.01083"/>
     </inertial>
   </link>
-   
+  
   <joint name="fr3_joint3" type="revolute">
     <origin rpy="1.5707963267948966 0 0" xyz="0 -0.316 0"/>
     <parent link="fr3_link2"/>
@@ -107,16 +118,19 @@
     <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.4937" soft_upper_limit="2.4937"/>
     <dynamics D="1" K="7000" damping="0.003" friction="0.0" mu_coulomb="0" mu_viscous="16"/>
   </joint>
-   
+  
   <link name="fr3_link4">
     <visual>
       <geometry>
-        <mesh filename="meshes/visual/link4.dae"/>
+        <mesh filename="./meshes/visual/link4.obj"/>
       </geometry>
+      <material name="panda_white">
+        <color rgba="1. 1. 1. 1."/>
+      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="meshes/collision/link4.stl"/>
+        <mesh filename="./meshes/collision/link4.stl"/>
       </geometry>
     </collision>
     <inertial>
@@ -125,7 +139,7 @@
       <inertia ixx="0.025853" ixy="0.007796" ixz="-0.001332" iyy="0.019552" iyz="0.008641" izz="0.028323"/>
     </inertial>
   </link>
-   
+
   <joint name="fr3_joint4" type="revolute">
     <origin rpy="1.5707963267948966 0 0" xyz="0.0825 0 0"/>
     <parent link="fr3_link3"/>
@@ -135,16 +149,19 @@
     <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.7478" soft_upper_limit="-0.4461"/>
     <dynamics D="1" K="7000" damping="0.003" friction="0.0" mu_coulomb="0" mu_viscous="16"/>
   </joint>
-   
+
   <link name="fr3_link5">
     <visual>
       <geometry>
-        <mesh filename="meshes/visual/link5.dae"/>
+        <mesh filename="./meshes/visual/link5.obj"/>
       </geometry>
+      <material name="panda_white">
+        <color rgba="1. 1. 1. 1."/>
+      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="meshes/collision/link5.stl"/>
+        <mesh filename="./meshes/collision/link5.stl"/>
       </geometry>
     </collision>
     <inertial>
@@ -153,7 +170,7 @@
       <inertia ixx="0.035549" ixy="-0.002117" ixz="-0.004037" iyy="0.029474" iyz="0.000229" izz="0.008627"/>
     </inertial>
   </link>
-   
+  
   <joint name="fr3_joint5" type="revolute">
     <origin rpy="-1.5707963267948966 0 0" xyz="-0.0825 0.384 0"/>
     <parent link="fr3_link4"/>
@@ -163,16 +180,19 @@
     <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.48" soft_upper_limit="2.48"/>
     <dynamics D="1" K="7000" damping="0.003" friction="0.0" mu_coulomb="0" mu_viscous="16"/>
   </joint>
-   
+
   <link name="fr3_link6">
     <visual>
       <geometry>
-        <mesh filename="meshes/visual/link6.dae"/>
+        <mesh filename="./meshes/visual/link6.obj"/>
       </geometry>
+      <material name="panda_white">
+        <color rgba="1. 1. 1. 1."/>
+      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="meshes/collision/link6.stl"/>
+        <mesh filename="./meshes/collision/link6.stl"/>
       </geometry>
     </collision>
     <inertial>
@@ -181,7 +201,7 @@
       <inertia ixx="0.001964" ixy="0.000109" ixz="-0.001158" iyy="0.004354" iyz="0.000341" izz="0.005433"/>
     </inertial>
   </link>
-   
+  
   <joint name="fr3_joint6" type="revolute">
     <origin rpy="1.5707963267948966 0 0" xyz="0 0 0"/>
     <parent link="fr3_link5"/>
@@ -191,16 +211,19 @@
     <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="0.8521" soft_upper_limit="4.2094"/>
     <dynamics D="1" K="7000" damping="0.003" friction="0.0" mu_coulomb="0" mu_viscous="16"/>
   </joint>
-   
+  
   <link name="fr3_link7">
     <visual>
       <geometry>
-        <mesh filename="meshes/visual/link7.dae"/>
+        <mesh filename="./meshes/visual/link7.obj"/>
       </geometry>
+      <material name="panda_white">
+        <color rgba="1. 1. 1. 1."/>
+      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="meshes/collision/link7.stl"/>
+        <mesh filename="./meshes/collision/link7.stl"/>
       </geometry>
     </collision>
     <inertial>
@@ -209,7 +232,7 @@
       <inertia ixx="0.012516" ixy="-0.000428" ixz="-0.001196" iyy="0.010027" iyz="-0.000741" izz="0.004815"/>
     </inertial>
   </link>
-   
+  
   <joint name="fr3_joint7" type="revolute">
     <origin rpy="1.5707963267948966 0 0" xyz="0.088 0 0"/>
     <parent link="fr3_link6"/>
@@ -220,35 +243,32 @@
     <dynamics D="1" K="7000" damping="0.003" friction="0.0" mu_coulomb="0" mu_viscous="16"/>
   </joint>
 
-  <link name="fr3_link8">
-    <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="0.0"/>
-      <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
-    </inertial>
-  </link>
-
+  <link name="fr3_link8"/>
+  
   <joint name="fr3_joint8" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.107"/>
     <parent link="fr3_link7"/>
     <child link="fr3_link8"/>
   </joint>
-
+  
   <joint name="fr3_hand_joint" type="fixed">
     <parent link="fr3_link8"/>
     <child link="fr3_hand"/>
     <origin rpy="0 0 -0.7853981633974483" xyz="0 0 0"/>
   </joint>
-   
+  
   <link name="fr3_hand">
     <visual>
       <geometry>
-        <mesh filename="meshes/visual/hand.dae"/>
+        <mesh filename="./meshes/visual/hand.obj"/>
       </geometry>
+      <material name="panda_white">
+        <color rgba="1. 1. 1. 1."/>
+      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="meshes/collision/hand.stl"/>
+        <mesh filename="./meshes/collision/hand.stl"/>
       </geometry>
     </collision>
     <inertial>
@@ -257,26 +277,23 @@
       <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.0025" iyz="0" izz="0.0017"/>
     </inertial>
   </link>
-   
-  <!-- Define the hand_tcp frame -->
-  <link name="fr3_hand_tcp">
-    <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="0.0"/>
-      <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
-    </inertial>
-  </link>
 
+  <!-- Define the hand_tcp frame -->
+  <link name="fr3_hand_tcp"/>
   <joint name="fr3_hand_tcp_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.1034"/>
     <parent link="fr3_hand"/>
     <child link="fr3_hand_tcp"/>
   </joint>
+
   <link name="fr3_leftfinger">
     <visual>
       <geometry>
-        <mesh filename="meshes/visual/finger.dae"/>
+        <mesh filename="./meshes/visual/finger.obj"/>
       </geometry>
+      <material name="panda_white">
+        <color rgba="1. 1. 1. 1."/>
+      </material>
     </visual>
     <!-- screw mount -->
     <collision>
@@ -312,12 +329,16 @@
       <inertia ixx="2.3749999999999997e-06" ixy="0" ixz="0" iyy="2.3749999999999997e-06" iyz="0" izz="7.5e-07"/>
     </inertial>
   </link>
+
   <link name="fr3_rightfinger">
     <visual>
       <origin rpy="0 0 3.141592653589793" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="meshes/visual/finger.dae"/>
+        <mesh filename="./meshes/visual/finger.obj"/>
       </geometry>
+      <material name="panda_white">
+        <color rgba="1. 1. 1. 1."/>
+      </material>
     </visual>
     <!-- screw mount -->
     <collision>
@@ -353,6 +374,7 @@
       <inertia ixx="2.3749999999999997e-06" ixy="0" ixz="0" iyy="2.3749999999999997e-06" iyz="0" izz="7.5e-07"/>
     </inertial>
   </link>
+
   <joint name="fr3_finger_joint1" type="prismatic">
     <parent link="fr3_hand"/>
     <child link="fr3_leftfinger"/>
@@ -361,6 +383,7 @@
     <limit effort="100" lower="0.0" upper="0.04" velocity="0.2"/>
     <dynamics damping="0.3"/>
   </joint>
+
   <joint name="fr3_finger_joint2" type="prismatic">
     <parent link="fr3_hand"/>
     <child link="fr3_rightfinger"/>
@@ -369,13 +392,6 @@
     <limit effort="100" lower="0.0" upper="0.04" velocity="0.2"/>
     <mimic joint="fr3_finger_joint1"/>
     <dynamics damping="0.3"/>
-  </joint>
-  <!-- Gazebo requires a joint to a link called "world" for statically mounted robots -->
-  <link name="world"/>
-  <joint name="world_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-    <parent link="world"/>
-    <child link="fr3_link0"/>
   </joint>
 </robot>
 
