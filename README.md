@@ -1,4 +1,4 @@
-# FR3Env
+# FR3Env: A Simulator for Franka Research 3
 
 ## Lessons Learned
 
