@@ -38,9 +38,9 @@ def main():
     q_max = env.observation_space.high[:9][:, np.newaxis]
     q_nominal = env.q_nominal[:, np.newaxis]
 
-    update_interval = 10
+    update_interval = 12
 
-    for i in range(60000):
+    for i in range(100000):
         if i % update_interval == 0:
             # Get end-effector position
             p_current = info["P_EE"][:, np.newaxis]
