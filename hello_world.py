@@ -40,7 +40,7 @@ def main():
     p_end = np.array([[0.2], [-0.4], [0.2]])
 
     # get initial rotation and position
-    dq, R_start, _p_start = info["dq"], info["R_EE"], info["P_EE"]
+    q, dq, R_start, _p_start = info["q"], info["dq"], info["R_EE"], info["P_EE"]
     p_start = _p_start[:, np.newaxis]
 
     # Get target orientation based on initial orientation
@@ -111,7 +111,7 @@ def main():
         delta_dq = pinv_jac @ dx - dq[:, np.newaxis]
 
         Kp = 10 * np.eye(9)
-        Kd = 0.0 * np.eye(9)
+        Kd = 0.1 * np.eye(9)
 
         tau = Kp @ delta_q + Kd @ delta_dq + info["G"][:, np.newaxis]
 
@@ -121,7 +121,7 @@ def main():
 
         # Send joint commands to motor
         info = env.step(tau)
-        dq = info["q"]
+        q, dq = info["q"], info["dq"]
 
         if i % 500 == 0:
             print(

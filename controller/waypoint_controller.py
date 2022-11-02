@@ -115,7 +115,7 @@ class WaypointController:
         Δdq = pinv_jac @ dx - dq[:, np.newaxis]
 
         Kp = 10 * np.eye(9)
-        Kd = 0.0 * np.eye(9)
+        Kd = 0.1 * np.eye(9)
 
         τ = Kp @ Δq + Kd @ Δdq + G
 

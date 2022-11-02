@@ -1,5 +1,3 @@
-from pdb import set_trace
-
 import numpy as np
 import pinocchio as pin
 from scipy.spatial.transform import Rotation as R
@@ -20,7 +18,7 @@ def main():
     info = env.reset()
 
     p_end = p_ends[p_end_id]
-    p_end_id = (p_end_id + 1) % 2
+    p_end_id = (p_end_id + 1) % len(p_ends)
 
     # get initial rotation and position
     dq, R_start, _p_start = info["dq"], info["R_EE"], info["P_EE"]
@@ -36,7 +34,7 @@ def main():
 
     controller.start(p_start, p_end, R_start, R_end, 30.0)
 
-    for i in range(20000):
+    for i in range(60000):
         # Get end-effector position
         p_current = info["P_EE"][:, np.newaxis]
 
@@ -65,7 +63,7 @@ def main():
 
         if controller.status == controller.WAIT:
             p_end = p_ends[p_end_id]
-            p_end_id = (p_end_id + 1) % 2
+            p_end_id = (p_end_id + 1) % len(p_ends)
 
             # get initial rotation and position
             dq, R_start, _p_start = info["dq"], info["R_EE"], info["P_EE"]
@@ -86,7 +84,7 @@ def main():
 
         # Send joint commands to motor
         info = env.step(tau)
-        dq = info["q"]
+        dq = info["dq"]
 
     env.close()
 
