@@ -96,17 +96,7 @@ class FR3Env(Env):
             0.001,
         ]
 
-        # target_joint_angles = [
-        #     -4.53091266e-01,
-        #     -1.22461690e-01,
-        #     -6.61429246e-01,
-        #     -2.55107118e00,
-        #     -1.18212302e-01,
-        #     2.45043047e00,
-        #     -2.34154970e-01,
-        #     2.22703178e-03,
-        #     3.57648518e-03,
-        # ]
+        self.q_nominal = np.array(target_joint_angles)
 
         for i, joint_ang in enumerate(target_joint_angles):
             p.resetJointState(self.robotID, self.active_joint_ids[i], joint_ang, 0.0)
