@@ -36,10 +36,10 @@ def main():
         # Get simulation time
         sim_time = i * (1 / 240)
 
-        # Compute α and dα
-        alpha, dalpha = alpha_func(sim_time, T=30.0)
+        if i % 12 == 0:
+            # Compute α and dα
+            alpha, dalpha = alpha_func(sim_time, T=30.0)
 
-        if i % 10 == 0 and alpha < 1.0:
             # Compute p_target
             p_target = p_start + alpha * (p_end - p_start)
 
@@ -93,7 +93,7 @@ def main():
 
         # Computer tau
         Kp = 10 * np.eye(9)
-        tau = Kp @ delta_q - 0.0 * dq[:, np.newaxis] + info["G"][:, np.newaxis]
+        tau = Kp @ delta_q - 0.1 * dq[:, np.newaxis] + info["G"][:, np.newaxis]
 
         # Set control for the two fingers to zero
         tau[-1] = 0.0

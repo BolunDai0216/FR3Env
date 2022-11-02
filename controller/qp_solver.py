@@ -86,7 +86,7 @@ class QPSolver:
         )
 
     def joint_centering_cost(self):
-        self.costs["joint_centering"] = 0.1 * ca.mtimes(
+        self.costs["joint_centering"] = ca.mtimes(
             (
                 self.parameters["nullspace_proj"]
                 @ (self.variables["q_target"] - self.parameters["q_nominal"])
