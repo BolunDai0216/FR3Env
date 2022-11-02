@@ -2,6 +2,11 @@ import casadi as ca
 
 
 class QPSolver:
+    """
+    This solver is based on the joint centering approach described
+    in: https://manipulation.csail.mit.edu/pick.html#diff_ik_w_constraints
+    """
+
     def __init__(self, nq):
         self.nq = nq  # number of joints
 
