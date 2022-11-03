@@ -46,10 +46,7 @@ class FR3Sim(Env):
 
         # Disable the velocity control on the joints as we use torque control.
         p.setJointMotorControlArray(
-            self.robotID,
-            self.active_joint_ids,
-            p.VELOCITY_CONTROL,
-            forces=np.zeros(9),
+            self.robotID, self.active_joint_ids, p.VELOCITY_CONTROL, forces=np.zeros(9),
         )
 
         # Get number of joints
