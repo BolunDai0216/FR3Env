@@ -15,13 +15,15 @@ class FR3Sim(Env):
         "render_modes": ["human", "rgb_array"],
     }
 
-    def __init__(self, render_mode: Optional[str] = None):
+    def __init__(self, render_mode: Optional[str] = None, record_path=None):
         if render_mode == "human":
             self.client = p.connect(p.GUI)
             # Improves rendering performance on M1 Macs
             p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
         else:
             self.client = p.connect(p.DIRECT)
+
+        self.record_path = record_path
 
         p.setGravity(0, 0, -9.81)
         p.setTimeStep(1 / 240)
@@ -44,7 +46,10 @@ class FR3Sim(Env):
 
         # Disable the velocity control on the joints as we use torque control.
         p.setJointMotorControlArray(
-            self.robotID, self.active_joint_ids, p.VELOCITY_CONTROL, forces=np.zeros(9),
+            self.robotID,
+            self.active_joint_ids,
+            p.VELOCITY_CONTROL,
+            forces=np.zeros(9),
         )
 
         # Get number of joints
@@ -110,6 +115,13 @@ class FR3Sim(Env):
             "P_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].translation),
         }
 
+        if self.record_path is not None:
+            p.resetDebugVisualizerCamera(1.4, 66.4, -16.2, [0.0, 0.0, 0.0])
+
+            self.loggingId = p.startStateLogging(
+                p.STATE_LOGGING_VIDEO_MP4, self.record_path
+            )
+
         return info
 
     def step(self, action):
@@ -129,6 +141,8 @@ class FR3Sim(Env):
         return info
 
     def close(self):
+        if self.record_path is not None:
+            p.stopStateLogging(self.loggingId)
         p.disconnect()
 
     def get_state(self):
