@@ -10,7 +10,7 @@ def alpha_func(t, T=5.0):
     if t <= T:
         alpha = np.sin((np.pi / 4) * (1 - np.cos(np.pi * t / T)))
         dalpha = (
-            ((np.pi ** 2) / (4 * T))
+            ((np.pi**2) / (4 * T))
             * np.cos((np.pi / 4) * (1 - np.cos(np.pi * t / T)))
             * np.sin(np.pi * t / T)
         )
@@ -49,10 +49,6 @@ def main():
     R_end = R.from_matrix(_R_end).as_matrix()
     R_error = R_end @ R_start.T
     axis_error, angle_error = axis_angle_from_rot_mat(R_error)
-
-    v_targets = []
-    ω_targets = []
-    kd_taus = []
 
     for i in range(10000):
         # Get simulation time
@@ -127,26 +123,7 @@ def main():
                 ),
             )
 
-        v_targets.append(v_target)
-        ω_targets.append(ω_target[:, np.newaxis])
-        kd_taus.append(Kd @ delta_dq)
-
     env.close()
-
-    # v_arr = np.concatenate(v_targets, axis=1)
-    # ω_arr = np.concatenate(ω_targets, axis=1)
-    # kd_arr = np.concatenate(kd_taus, axis=1)
-
-    # fig, axs = plt.subplots(1, 3, figsize=(15, 5))
-
-    # for i in range(3):
-    #     axs[0].plot(v_arr[i, :])
-    #     axs[1].plot(ω_arr[i, :])
-
-    # for i in range(9):
-    #     axs[2].plot(kd_arr[i, :])
-
-    # plt.show()
 
 
 if __name__ == "__main__":
