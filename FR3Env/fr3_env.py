@@ -1,5 +1,4 @@
 import copy
-from pdb import set_trace
 from typing import Optional
 
 import numpy as np
@@ -38,7 +37,6 @@ class FR3Sim(Env):
         self.robotID = p.loadURDF("fr3.urdf", useFixedBase=True)
 
         # Build pin_robot
-        set_trace()
         self.robot = RobotWrapper.BuildFromURDF(robot_URDF)
 
         # Get active joint ids
@@ -46,10 +44,7 @@ class FR3Sim(Env):
 
         # Disable the velocity control on the joints as we use torque control.
         p.setJointMotorControlArray(
-            self.robotID,
-            self.active_joint_ids,
-            p.VELOCITY_CONTROL,
-            forces=np.zeros(9),
+            self.robotID, self.active_joint_ids, p.VELOCITY_CONTROL, forces=np.zeros(9),
         )
 
         # Get number of joints
