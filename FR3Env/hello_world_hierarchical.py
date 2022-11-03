@@ -1,17 +1,15 @@
-from pdb import set_trace
-
 import numpy as np
 import numpy.linalg as LA
 import pinocchio as pin
 from scipy.spatial.transform import Rotation as R
 
-from controller.qp_solver import QPSolver
-from fr3_env import FR3Env
-from hello_world import alpha_func, axis_angle_from_rot_mat
+from FR3Env.controller.qp_solver import QPSolver
+from FR3Env.fr3_env import FR3Sim
+from FR3Env.hello_world import alpha_func, axis_angle_from_rot_mat
 
 
 def main():
-    env = FR3Env(render_mode="human")
+    env = FR3Sim(render_mode="human")
     qp_solver = QPSolver(9)  # 9 represents there are 9 joints
 
     info = env.reset()

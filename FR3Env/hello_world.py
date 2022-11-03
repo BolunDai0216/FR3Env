@@ -1,12 +1,10 @@
-from pdb import set_trace
-
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.linalg as LA
 import pinocchio as pin
 from scipy.spatial.transform import Rotation as R
 
-from fr3_env import FR3Env
+from FR3Env.fr3_env import FR3Sim
 
 
 def alpha_func(t, T=5.0):
@@ -34,7 +32,7 @@ def axis_angle_from_rot_mat(rot_mat):
 
 
 def main():
-    env = FR3Env(render_mode="human")
+    env = FR3Sim(render_mode="human")
     info = env.reset()
 
     p_end = np.array([[0.2], [-0.4], [0.2]])

@@ -1,10 +1,8 @@
-from pdb import set_trace
-
 import numpy as np
 import numpy.linalg as LA
 from scipy.spatial.transform import Rotation as R
 
-from controller.qp_solver import QPSolver
+from FR3Env.controller.qp_solver import QPSolver
 
 
 def axis_angle_from_rot_mat(rot_mat):

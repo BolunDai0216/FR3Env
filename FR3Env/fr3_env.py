@@ -1,5 +1,5 @@
 import copy
-import pathlib
+from pdb import set_trace
 from typing import Optional
 
 import numpy as np
@@ -8,8 +8,10 @@ import pybullet_data
 from gymnasium import Env, spaces
 from pinocchio.robot_wrapper import RobotWrapper
 
+from FR3Env import getDataPath
 
-class FR3Env(Env):
+
+class FR3Sim(Env):
     metadata = {
         "render_modes": ["human", "rgb_array"],
     }
@@ -30,11 +32,13 @@ class FR3Env(Env):
         p.loadURDF("plane.urdf")
 
         # Load Franka Research 3 Robot
-        file_directory = str(pathlib.Path(__file__).parent.resolve())
+        file_directory = getDataPath()
         robot_URDF = file_directory + "/robots/fr3.urdf"
-        self.robotID = p.loadURDF(robot_URDF, useFixedBase=True)
+        p.setAdditionalSearchPath(file_directory + "/robots/")
+        self.robotID = p.loadURDF("fr3.urdf", useFixedBase=True)
 
         # Build pin_robot
+        set_trace()
         self.robot = RobotWrapper.BuildFromURDF(robot_URDF)
 
         # Get active joint ids

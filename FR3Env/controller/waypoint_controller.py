@@ -1,5 +1,3 @@
-from pdb import set_trace
-
 import numpy as np
 import numpy.linalg as LA
 from scipy.spatial.transform import Rotation as R

@@ -2,8 +2,8 @@ import numpy as np
 import pinocchio as pin
 from scipy.spatial.transform import Rotation as R
 
-from controller.waypoint_controller import WaypointController
-from fr3_env import FR3Env
+from FR3Env.controller.waypoint_controller import WaypointController
+from FR3Env.fr3_env import FR3Sim
 
 
 def main():
@@ -13,7 +13,7 @@ def main():
     ]
     p_end_id = 0
 
-    env = FR3Env(render_mode="human")
+    env = FR3Sim(render_mode="human")
     controller = WaypointController()
     info = env.reset()
 
