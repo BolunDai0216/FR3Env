@@ -1,3 +1,5 @@
+import argparse
+
 import numpy as np
 import pinocchio as pin
 from scipy.spatial.transform import Rotation as R
@@ -7,6 +9,23 @@ from FR3Env.fr3_env import FR3Sim
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-r",
+        "--recordPath",
+        help="path where the recording is saved",
+        type=str,
+        default=None,
+    )
+    parser.add_argument(
+        "-i",
+        "--iterationNum",
+        help="number of iterations of the simulation",
+        type=int,
+        default=100000,
+    )
+    args = parser.parse_args()
+
     p_ends = [
         np.array([[0.4], [0.4], [0.2]]),
         np.array([[0.4], [-0.4], [0.2]]),
@@ -14,7 +33,7 @@ def main():
     ]
     p_end_id = 0
 
-    env = FR3Sim(render_mode="human")
+    env = FR3Sim(render_mode="human", record_path=args.recordPath)
     controller = WaypointController()
     info = env.reset()
 
@@ -40,7 +59,7 @@ def main():
 
     update_interval = 12
 
-    for i in range(100000):
+    for i in range(args.iterationNum):
         if i % update_interval == 0:
             # Get end-effector position
             p_current = info["P_EE"][:, np.newaxis]
