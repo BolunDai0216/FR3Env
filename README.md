@@ -21,6 +21,9 @@ It is suggested to install this package within a `conda` virtual environment, si
 fr3env-waypoint-demo
 ```
 
+https://user-images.githubusercontent.com/36321182/199758677-c325b83e-695f-4cad-b302-7c7ee6a30922.mp4
+
+
 ## Lessons Learned
 
 - To make `pinocchio` work all of the links have to have a specified mass and inertia.
