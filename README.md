@@ -7,9 +7,11 @@
 
 ## Installation
 
-First change the mesh file path in the URDF file to `<README-Parent-Path>/FR3Env/robots/meshes/<Mesh-Path>`. Then run
+To install this package, first install the dependencies, then, run the following commands
 
 ```console
+git clone https://github.com/BolunDai0216/FR3Env.git
+cd FR3Env
 python3 -m pip install .
 ```
 
