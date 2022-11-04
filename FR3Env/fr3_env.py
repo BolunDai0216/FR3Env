@@ -1,5 +1,4 @@
 import copy
-from pdb import set_trace
 from typing import Optional
 
 import numpy as np
@@ -34,24 +33,21 @@ class FR3Sim(Env):
         p.loadURDF("plane.urdf")
 
         # Load Franka Research 3 Robot
-        file_directory = getDataPath()
-        robot_URDF = file_directory + "/robots/fr3.urdf"
-        search_path = file_directory + "/robots"
-        p.setAdditionalSearchPath(search_path)
+        package_directory = getDataPath()
+        robot_URDF = package_directory + "/robots/fr3.urdf"
+        urdf_search_path = package_directory + "/robots"
+        p.setAdditionalSearchPath(urdf_search_path)
         self.robotID = p.loadURDF("fr3.urdf", useFixedBase=True)
 
         # Build pin_robot
-        self.robot = RobotWrapper.BuildFromURDF(robot_URDF, file_directory)
+        self.robot = RobotWrapper.BuildFromURDF(robot_URDF, package_directory)
 
         # Get active joint ids
         self.active_joint_ids = [0, 1, 2, 3, 4, 5, 6, 10, 11]
 
         # Disable the velocity control on the joints as we use torque control.
         p.setJointMotorControlArray(
-            self.robotID,
-            self.active_joint_ids,
-            p.VELOCITY_CONTROL,
-            forces=np.zeros(9),
+            self.robotID, self.active_joint_ids, p.VELOCITY_CONTROL, forces=np.zeros(9),
         )
 
         # Get number of joints
