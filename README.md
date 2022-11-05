@@ -20,7 +20,7 @@ It is suggested to install this package within a `conda` virtual environment, si
 ## Run the demo
 
 ```console
-fr3env-waypoint-demo
+fr3env-waypoint-hierarchical-proxqp-demo
 ```
 
 https://user-images.githubusercontent.com/36321182/199758677-c325b83e-695f-4cad-b302-7c7ee6a30922.mp4
