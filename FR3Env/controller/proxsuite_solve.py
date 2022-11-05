@@ -11,7 +11,7 @@ class ProxSuiteSolver:
         self.initialized = False
 
     def solve(self, params):
-        H, g, A, b, C, u, l = self.compute_params(params)
+        H, g, A, b, C, l, u = self.compute_params(params)
 
         if not self.initialized:
             self.qp.init(H, g, A, b, C, l, u)

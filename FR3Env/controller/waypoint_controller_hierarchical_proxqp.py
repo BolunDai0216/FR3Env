@@ -18,7 +18,7 @@ def alpha_func(t, T=5.0):
     if t <= T:
         alpha = np.sin((np.pi / 4) * (1 - np.cos(np.pi * t / T)))
         dalpha = (
-            ((np.pi ** 2) / (4 * T))
+            ((np.pi**2) / (4 * T))
             * np.cos((np.pi / 4) * (1 - np.cos(np.pi * t / T)))
             * np.sin(np.pi * t / T)
         )
@@ -128,6 +128,6 @@ class WaypointController:
         }
 
         self.qp_solver.solve(params)
-        q_target = self.qp_solver.qp.results.z
+        q_target = self.qp_solver.qp.results.x
 
         return q_target, error
