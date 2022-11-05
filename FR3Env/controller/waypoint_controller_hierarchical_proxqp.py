@@ -2,7 +2,7 @@ import numpy as np
 import numpy.linalg as LA
 from scipy.spatial.transform import Rotation as R
 
-from FR3Env.controller.proxsuite_solve import ProxsuiteSolver
+from FR3Env.controller.proxsuite_solve import ProxSuiteSolver
 
 
 def axis_angle_from_rot_mat(rot_mat):
@@ -18,7 +18,7 @@ def alpha_func(t, T=5.0):
     if t <= T:
         alpha = np.sin((np.pi / 4) * (1 - np.cos(np.pi * t / T)))
         dalpha = (
-            ((np.pi ** 2) / (4 * T))
+            ((np.pi**2) / (4 * T))
             * np.cos((np.pi / 4) * (1 - np.cos(np.pi * t / T)))
             * np.sin(np.pi * t / T)
         )
@@ -41,7 +41,7 @@ class WaypointController:
         self.R_end = None
         self.movement_duration = None
         self.clock = 0.0
-        self.qp_solver = ProxsuiteSolver(9)  # 9 represents there are 9 joints
+        self.qp_solver = ProxSuiteSolver(9)  # 9 represents there are 9 joints
 
         self.status = None
 
@@ -128,6 +128,6 @@ class WaypointController:
         }
 
         self.qp_solver.solve(params)
-        q_target = self.qp_solver.qp.results.x
+        q_target = self.qp_solver.qp.results.z
 
         return q_target, error

@@ -2,7 +2,7 @@ import numpy as np
 import proxsuite
 
 
-class ProxsuiteSolver:
+class ProxSuiteSolver:
     def __init__(self, nq):
         self.n = nq
         self.n_eq = 0
@@ -15,6 +15,7 @@ class ProxsuiteSolver:
 
         if not self.initialized:
             self.qp.init(H, g, A, b, C, l, u)
+            self.qp.settings.eps_abs = 1.0e-6
             self.initialized = True
         else:
             self.qp.update(H, g, A, b, C, l, u)

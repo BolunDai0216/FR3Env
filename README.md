@@ -3,7 +3,7 @@
 ## Dependencies
 
 - Core dependencies: `NumPy`, `SciPy`, `PyBullet`, `Pinocchio`, `Gymnasium`
-- Dependencies to run the demos: `CasADi`, 
+- Dependencies to run the demos: `CasADi`, `ProxSuite`, 
 
 ## Installation
 
