@@ -29,13 +29,17 @@ class QPSolver:
             "verbose": False,
             "ipopt.print_level": 0,
             "print_time": 0,
-            "ipopt.acceptable_constr_viol_tol": 1e-8,
-            "ipopt.constr_viol_tol": 1e-8,
+            "ipopt.acceptable_constr_viol_tol": 1e-6,
+            "ipopt.constr_viol_tol": 1e-6,
         }
         self.opti.solver("ipopt", sol_options)
 
     def solve(self, params, warm_start_guess=None):
         self.set_parameters_value(params)
+
+        if warm_start_guess is not None:
+            self.warm_start(warm_start_guess)
+
         sol = self.opti.solve()
 
         return sol
@@ -66,6 +70,15 @@ class QPSolver:
 
     def set_variables(self):
         self.variables["q_target"] = self.opti.variable(self.nq, 1)
+
+    def warm_start(self, warm_start_guess):
+        """
+        set the starting value of variables in solver to warm start guess
+        -----------------------------------------------------------------
+        warm_start_guess: a dict storing guesses
+        """
+        for var_name in warm_start_guess:
+            self.opti.set_initial(self.variables[var_name], warm_start_guess[var_name])
 
     def set_parameters_value(self, params):
         """
