@@ -1,5 +1,4 @@
 import numpy as np
-import pinocchio as pin
 from scipy.spatial.transform import Rotation as R
 
 from FR3Env.controller.waypoint_controller import WaypointController
@@ -41,15 +40,8 @@ def main():
         # Get end-effector orientation
         R_current = info["R_EE"]
 
-        # Get frame ID for grasp target
-        jacobian_frame = pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
-
-        # Get Jacobian from grasp target frame
-        # preprocessing is done in get_state_update_pinocchio()
-        jacobian = env.robot.getFrameJacobian(env.EE_FRAME_ID, jacobian_frame)
-
         # Get pseudo-inverse of frame Jacobian
-        pinv_jac = np.linalg.pinv(jacobian)
+        pinv_jac = info["pJ_EE"]
 
         # Get gravitational vector
         G = info["G"][:, np.newaxis]

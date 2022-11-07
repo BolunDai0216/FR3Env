@@ -1,6 +1,5 @@
 import numpy as np
 import numpy.linalg as LA
-import pinocchio as pin
 from scipy.spatial.transform import Rotation as R
 
 from FR3Env.fr3_env import FR3Sim
@@ -10,7 +9,7 @@ def alpha_func(t, T=5.0):
     if t <= T:
         alpha = np.sin((np.pi / 4) * (1 - np.cos(np.pi * t / T)))
         dalpha = (
-            ((np.pi ** 2) / (4 * T))
+            ((np.pi**2) / (4 * T))
             * np.cos((np.pi / 4) * (1 - np.cos(np.pi * t / T)))
             * np.sin(np.pi * t / T)
         )
@@ -82,15 +81,8 @@ def main():
         # Orientation error in axis-angle form
         rotvec_err = R.from_matrix(R_err).as_rotvec()
 
-        # Get frame ID for grasp target
-        jacobian_frame = pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
-
-        # Get Jacobian from grasp target frame
-        # preprocessing is done in get_state_update_pinocchio()
-        jacobian = env.robot.getFrameJacobian(env.EE_FRAME_ID, jacobian_frame)
-
         # Get pseudo-inverse of frame Jacobian
-        pinv_jac = np.linalg.pinv(jacobian)
+        pinv_jac = info["pJ_EE"]
 
         # Compute controller
         delta_x = np.zeros((6, 1))

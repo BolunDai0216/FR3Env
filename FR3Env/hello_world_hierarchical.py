@@ -1,6 +1,5 @@
 import numpy as np
 import numpy.linalg as LA
-import pinocchio as pin
 from scipy.spatial.transform import Rotation as R
 
 from FR3Env.controller.qp_solver import QPSolver
@@ -57,15 +56,11 @@ def main():
             # Orientation error in axis-angle form
             rotvec_err = R.from_matrix(R_err).as_rotvec()
 
-            # Get frame ID for grasp target
-            jacobian_frame = pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
-
             # Get Jacobian from grasp target frame
-            # preprocessing is done in get_state_update_pinocchio()
-            jacobian = env.robot.getFrameJacobian(env.EE_FRAME_ID, jacobian_frame)
+            jacobian = info["J_EE"]
 
             # Get pseudo-inverse of frame Jacobian
-            pinv_jac = np.linalg.pinv(jacobian)
+            pinv_jac = info["pJ_EE"]
 
             # Compute controller
             p_error = np.zeros((6, 1))

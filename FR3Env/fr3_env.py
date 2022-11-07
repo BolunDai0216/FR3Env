@@ -2,6 +2,7 @@ import copy
 from typing import Optional
 
 import numpy as np
+import pinocchio as pin
 import pybullet as p
 import pybullet_data
 from gymnasium import Env, spaces
@@ -47,7 +48,10 @@ class FR3Sim(Env):
 
         # Disable the velocity control on the joints as we use torque control.
         p.setJointMotorControlArray(
-            self.robotID, self.active_joint_ids, p.VELOCITY_CONTROL, forces=np.zeros(9),
+            self.robotID,
+            self.active_joint_ids,
+            p.VELOCITY_CONTROL,
+            forces=np.zeros(9),
         )
 
         # Get number of joints
@@ -55,6 +59,9 @@ class FR3Sim(Env):
 
         # End-effector frame id
         self.EE_FRAME_ID = 26
+
+        # Get frame ID for grasp target
+        self.jacobian_frame = pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
 
         # Set observation and action space
         obs_low_q = []
@@ -104,14 +111,7 @@ class FR3Sim(Env):
             p.resetJointState(self.robotID, self.active_joint_ids[i], joint_ang, 0.0)
 
         q, dq = self.get_state_update_pinocchio()
-
-        info = {
-            "q": q,
-            "dq": dq,
-            "G": self.robot.gravity(q),
-            "R_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].rotation),
-            "P_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].translation),
-        }
+        info = self.get_info(q, dq)
 
         if self.record_path is not None:
             p.resetDebugVisualizerCamera(1.4, 66.4, -16.2, [0.0, 0.0, 0.0])
@@ -122,19 +122,32 @@ class FR3Sim(Env):
 
         return info
 
-    def step(self, action):
-        self.send_joint_command(action)
-        p.stepSimulation()
+    def get_info(self, q, dq):
+        # Get Jacobian from grasp target frame
+        # preprocessing is done in get_state_update_pinocchio()
+        jacobian = self.robot.getFrameJacobian(self.EE_FRAME_ID, self.jacobian_frame)
 
-        q, dq = self.get_state_update_pinocchio()
+        # Get pseudo-inverse of frame Jacobian
+        pinv_jac = np.linalg.pinv(jacobian)
 
         info = {
             "q": q,
             "dq": dq,
             "G": self.robot.gravity(q),
+            "J_EE": jacobian,
+            "pJ_EE": pinv_jac,
             "R_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].rotation),
             "P_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].translation),
         }
+
+        return info
+
+    def step(self, action):
+        self.send_joint_command(action)
+        p.stepSimulation()
+
+        q, dq = self.get_state_update_pinocchio()
+        info = self.get_info(q, dq)
 
         return info
 
