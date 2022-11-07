@@ -170,7 +170,7 @@ class FR3Sim(Env):
         """
         f.shape = (18, 1), g.shape = (18, 9)
         """
-        Minv = LA.inv(self.robot.mass(q))
+        Minv = pin.computeMinverse(self.robot.model, self.robot.data, q)
         nle = self.robot.nle(q, dq)
 
         f = np.vstack((dq[:, np.newaxis], -Minv @ nle[:, np.newaxis]))
