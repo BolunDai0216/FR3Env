@@ -11,14 +11,14 @@ class ProxSuiteSolver:
         self.initialized = False
 
     def solve(self, params):
-        H, g, A, b, C, l, u = self.compute_params(params)
+        H, g, A, b, C, lb, ub = self.compute_params(params)
 
         if not self.initialized:
-            self.qp.init(H, g, A, b, C, l, u)
+            self.qp.init(H, g, A, b, C, lb, ub)
             self.qp.settings.eps_abs = 1.0e-6
             self.initialized = True
         else:
-            self.qp.update(H, g, A, b, C, l, u)
+            self.qp.update(H, g, A, b, C, lb, ub)
 
         self.qp.solve()
 
@@ -42,7 +42,7 @@ class ProxSuiteSolver:
         A = np.zeros((self.n_eq, 9))
         b = np.zeros((self.n_eq,))
         C = np.eye(self.n_ieq)
-        u = params["q_max"][:, 0]
-        l = params["q_min"][:, 0]
+        ub = params["q_max"][:, 0]
+        lb = params["q_min"][:, 0]
 
-        return H, g, A, b, C, l, u
+        return H, g, A, b, C, lb, ub
