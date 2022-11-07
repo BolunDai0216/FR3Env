@@ -48,7 +48,10 @@ class FR3Sim(Env):
 
         # Disable the velocity control on the joints as we use torque control.
         p.setJointMotorControlArray(
-            self.robotID, self.active_joint_ids, p.VELOCITY_CONTROL, forces=np.zeros(9),
+            self.robotID,
+            self.active_joint_ids,
+            p.VELOCITY_CONTROL,
+            forces=np.zeros(9),
         )
 
         # Get number of joints
@@ -143,7 +146,7 @@ class FR3Sim(Env):
 
         dJ = pin.getFrameJacobianTimeVariation(
             self.robot.model, self.robot.data, self.EE_FRAME_ID, self.jacobian_frame
-        )[:2, :]
+        )
 
         f, g = self.get_dynamics(q, dq)
 
