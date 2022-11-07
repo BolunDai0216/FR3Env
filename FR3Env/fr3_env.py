@@ -2,6 +2,7 @@ import copy
 from typing import Optional
 
 import numpy as np
+import numpy.linalg as LA
 import pinocchio as pin
 import pybullet as p
 import pybullet_data
@@ -123,6 +124,20 @@ class FR3Sim(Env):
         return info
 
     def get_info(self, q, dq):
+        """
+        info contains:
+        -------------------------------------
+        q: joint position
+        dq: joint velocity
+        f(x): drift
+        g(x): control influence matrix
+        G: gravitational vector
+        J_EE: end-effector Jacobian
+        dJ_EE: time derivative of end-effector Jacobian
+        pJ_EE: pseudo-inverse of end-effector Jacobian
+        R_EE: end-effector rotation matrix
+        P_EE: end-effector position vector
+        """
         # Get Jacobian from grasp target frame
         # preprocessing is done in get_state_update_pinocchio()
         jacobian = self.robot.getFrameJacobian(self.EE_FRAME_ID, self.jacobian_frame)
@@ -130,17 +145,38 @@ class FR3Sim(Env):
         # Get pseudo-inverse of frame Jacobian
         pinv_jac = np.linalg.pinv(jacobian)
 
+        dJ = pin.getFrameJacobianTimeVariation(
+            self.robot.model, self.robot.data, self.EE_FRAME_ID, self.jacobian_frame
+        )[:2, :]
+
+        f, g = self.get_dynamics(q, dq)
+
         info = {
             "q": q,
             "dq": dq,
+            "f(x)": f,
+            "g(x)": g,
             "G": self.robot.gravity(q),
             "J_EE": jacobian,
+            "dJ_EE": dJ,
             "pJ_EE": pinv_jac,
             "R_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].rotation),
             "P_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].translation),
         }
 
         return info
+
+    def get_dynamics(self, q, dq):
+        """
+        f.shape = (18, 1), g.shape = (18, 9)
+        """
+        Minv = LA.inv(self.robot.mass(q))
+        nle = self.robot.nle(q, dq)
+
+        f = np.vstack((dq[:, np.newaxis], -Minv @ nle[:, np.newaxis]))
+        g = np.vstack((np.zeros((int(9), 9)), Minv))
+
+        return f, g
 
     def step(self, action):
         self.send_joint_command(action)
