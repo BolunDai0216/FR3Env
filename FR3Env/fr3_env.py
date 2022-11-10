@@ -48,7 +48,10 @@ class FR3Sim(Env):
 
         # Disable the velocity control on the joints as we use torque control.
         p.setJointMotorControlArray(
-            self.robotID, self.active_joint_ids, p.VELOCITY_CONTROL, forces=np.zeros(9),
+            self.robotID,
+            self.active_joint_ids,
+            p.VELOCITY_CONTROL,
+            forces=np.zeros(9),
         )
 
         # Get number of joints
@@ -145,13 +148,16 @@ class FR3Sim(Env):
             self.robot.model, self.robot.data, self.EE_FRAME_ID, self.jacobian_frame
         )
 
-        f, g = self.get_dynamics(q, dq)
+        f, g, M, Minv, nle = self.get_dynamics(q, dq)
 
         info = {
             "q": q,
             "dq": dq,
             "f(x)": f,
             "g(x)": g,
+            "M(q)": M,
+            "M(q)^{-1}": Minv,
+            "nle": nle,
             "G": self.robot.gravity(q),
             "J_EE": jacobian,
             "dJ_EE": dJ,
@@ -167,12 +173,13 @@ class FR3Sim(Env):
         f.shape = (18, 1), g.shape = (18, 9)
         """
         Minv = pin.computeMinverse(self.robot.model, self.robot.data, q)
+        M = self.robot.mass(q)
         nle = self.robot.nle(q, dq)
 
         f = np.vstack((dq[:, np.newaxis], -Minv @ nle[:, np.newaxis]))
         g = np.vstack((np.zeros((int(9), 9)), Minv))
 
-        return f, g
+        return f, g, M, Minv, nle
 
     def step(self, action):
         self.send_joint_command(action)
