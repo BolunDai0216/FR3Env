@@ -177,7 +177,7 @@ class FR3Sim(Env):
         nle = self.robot.nle(q, dq)
 
         f = np.vstack((dq[:, np.newaxis], -Minv @ nle[:, np.newaxis]))
-        g = np.vstack((np.zeros((int(9), 9)), Minv))
+        g = np.vstack((np.zeros((9, 9)), Minv))
 
         return f, g, M, Minv, nle
 
