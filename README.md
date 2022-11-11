@@ -7,7 +7,7 @@
 
 ## Installation
 
-To install this package, first install the dependencies, then, run the following commands
+To install this package, first install the dependencies. `NumPy`, `SciPy`, `PyBullet`, and `Gymnasium` can be installed while running the setup code below. It is recommended to install `Pinocchio`, `CasADi`, and `ProxSuite` using conda. Then, run the following commands
 
 ```console
 git clone https://github.com/BolunDai0216/FR3Env.git
