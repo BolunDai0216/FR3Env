@@ -1,6 +1,7 @@
 import argparse
 
 import numpy as np
+import pybullet as p
 from scipy.spatial.transform import Rotation as R
 
 from FR3Env.controller.waypoint_controller_hierarchical_proxqp import WaypointController
@@ -32,7 +33,10 @@ def main():
     ]
     p_end_id = 0
 
+    dt = 1 / 1000
     env = FR3Sim(render_mode="human", record_path=args.recordPath)
+    p.setTimeStep(dt)
+
     controller = WaypointController()
     info = env.reset()
 
@@ -73,9 +77,9 @@ def main():
         G = info["G"][:, np.newaxis]
 
         if i == 0:
-            dt = 0
+            _dt = 0
         else:
-            dt = 1 / 240
+            _dt = dt
 
         q_target, error = controller.update(
             q,
@@ -85,7 +89,7 @@ def main():
             pinv_jac,
             jacobian,
             G,
-            dt,
+            _dt,
             q_min,
             q_max,
             q_nominal,
