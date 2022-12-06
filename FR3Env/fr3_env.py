@@ -90,7 +90,15 @@ class FR3Sim(Env):
         self.observation_space = spaces.Box(obs_low, obs_high, dtype=np.float32)
         self.action_space = spaces.Box(act_low, act_high, dtype=np.float32)
 
-    def reset(self, *, seed: Optional[int] = None, options: Optional[dict] = None):
+    def reset(
+        self,
+        *,
+        seed: Optional[int] = None,
+        options: Optional[dict] = None,
+        cameraDistance=1.4,
+        cameraYaw=66.4,
+        cameraPitch=-16.2
+    ):
         super().reset(seed=seed)
 
         target_joint_angles = [
@@ -114,7 +122,9 @@ class FR3Sim(Env):
         info = self.get_info(q, dq)
 
         if self.record_path is not None:
-            p.resetDebugVisualizerCamera(1.4, 66.4, -16.2, [0.0, 0.0, 0.0])
+            p.resetDebugVisualizerCamera(
+                cameraDistance, cameraYaw, cameraPitch, [0.0, 0.0, 0.0]
+            )
 
             self.loggingId = p.startStateLogging(
                 p.STATE_LOGGING_VIDEO_MP4, self.record_path
