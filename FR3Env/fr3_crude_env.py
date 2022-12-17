@@ -155,15 +155,25 @@ class FR3CrudeSim(Env):
         J_EE: end-effector Jacobian
         dJ_EE: time derivative of end-effector Jacobian
         pJ_EE: pseudo-inverse of end-effector Jacobian
+        R_LINK5_1: rotation matrix of the first part of the 5th link
+        P_LINK5_1: postion vector of the first part of the 5th link
+        q_LINK5_1: quaternion of the first part of the 5th link [x, y, z, w]
+        R_LINK5_2: rotation matrix of the second part of the 5th link
+        P_LINK5_2: postion vector of the second part of the 5th link
+        q_LINK5_2: quaternion of the second part of the 5th link [x, y, z, w]
+        R_LINK6: rotation matrix of the 6th link
+        P_LINK6: postion vector of the 6th link
+        q_LINK6: quaternion of the 6th link [x, y, z, w]
         R_LINK7: rotation matrix of the 7th link
         P_LINK7: postion vector of the 7th link
-        R_LINK8: rotation matrix of the 8th link
-        P_LINK8: postion vector of the 8th link
+        q_LINK7: quaternion of the 7th link [x, y, z, w]
         R_HAND: rotation matrix of the hand
         P_HAND: position vector of the hand
+        q_HAND: quaternion of the hand [x, y, z, w]
         R_EE: end-effector rotation matrix
         P_EE: end-effector position vector
         """
+
         # Get Jacobian from grasp target frame
         # preprocessing is done in get_state_update_pinocchio()
         jacobian = self.robot.getFrameJacobian(self.EE_FRAME_ID, self.jacobian_frame)
@@ -177,6 +187,7 @@ class FR3CrudeSim(Env):
 
         f, g, M, Minv, nle = self.get_dynamics(q, dq)
 
+        # compute the position and rotation of the crude models
         p_link5_1, R_link5_1, q_LINK5_1 = self.compute_crude_location(
             np.eye(3), np.array(([0.0], [0.0], [-0.26])), self.FR3_LINK5_FRAME_ID
         )
