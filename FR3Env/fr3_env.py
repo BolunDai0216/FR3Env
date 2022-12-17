@@ -16,7 +16,9 @@ class FR3Sim(Env):
         "render_modes": ["human", "rgb_array"],
     }
 
-    def __init__(self, render_mode: Optional[str] = None, record_path=None):
+    def __init__(
+        self, render_mode: Optional[str] = None, record_path=None, crude_model=False
+    ):
         if render_mode == "human":
             self.client = p.connect(p.GUI)
             # Improves rendering performance on M1 Macs
@@ -34,11 +36,15 @@ class FR3Sim(Env):
         p.loadURDF("plane.urdf")
 
         # Load Franka Research 3 Robot
+        if crude_model:
+            model_name = "fr3_crude"
+        else:
+            model_name = "fr3"
         package_directory = getDataPath()
-        robot_URDF = package_directory + "/robots/fr3.urdf"
+        robot_URDF = package_directory + "/robots/{}.urdf".format(model_name)
         urdf_search_path = package_directory + "/robots"
         p.setAdditionalSearchPath(urdf_search_path)
-        self.robotID = p.loadURDF("fr3.urdf", useFixedBase=True)
+        self.robotID = p.loadURDF("{}.urdf".format(model_name), useFixedBase=True)
 
         # Build pin_robot
         self.robot = RobotWrapper.BuildFromURDF(robot_URDF, package_directory)
