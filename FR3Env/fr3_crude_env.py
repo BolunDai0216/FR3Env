@@ -7,6 +7,7 @@ import pybullet as p
 import pybullet_data
 from gymnasium import Env, spaces
 from pinocchio.robot_wrapper import RobotWrapper
+from scipy.spatial.transform import Rotation
 
 from FR3Env import getDataPath
 
@@ -176,27 +177,23 @@ class FR3CrudeSim(Env):
 
         f, g, M, Minv, nle = self.get_dynamics(q, dq)
 
-        p_link5_1, R_link5_1 = self.compute_crude_location(
+        p_link5_1, R_link5_1, q_LINK5_1 = self.compute_crude_location(
             np.eye(3), np.array(([0.0], [0.0], [-0.26])), self.FR3_LINK5_FRAME_ID
         )
 
-        p_link5_2, R_link5_2 = self.compute_crude_location(
+        p_link5_2, R_link5_2, q_LINK5_2 = self.compute_crude_location(
             np.eye(3), np.array(([0.0], [0.08], [-0.13])), self.FR3_LINK5_FRAME_ID
         )
 
-        p_link6, R_link6 = self.compute_crude_location(
+        p_link6, R_link6, q_LINK6 = self.compute_crude_location(
             np.eye(3), np.array(([0.0], [0.0], [-0.03])), self.FR3_LINK6_FRAME_ID
         )
 
-        p_link6, R_link6 = self.compute_crude_location(
-            np.eye(3), np.array(([0.0], [0.0], [-0.03])), self.FR3_LINK6_FRAME_ID
-        )
-
-        p_link7, R_link7 = self.compute_crude_location(
+        p_link7, R_link7, q_LINK7 = self.compute_crude_location(
             np.eye(3), np.array(([0.0], [0.0], [0.01])), self.FR3_LINK7_FRAME_ID
         )
 
-        p_hand, R_hand = self.compute_crude_location(
+        p_hand, R_hand, q_HAND = self.compute_crude_location(
             np.eye(3), np.array(([0.0], [0.0], [0.06])), self.FR3_HAND_FRAME_ID
         )
 
@@ -214,14 +211,19 @@ class FR3CrudeSim(Env):
             "pJ_EE": pinv_jac,
             "R_LINK5_1": copy.deepcopy(R_link5_1),
             "P_LINK5_1": copy.deepcopy(p_link5_1),
+            "q_LINK5_1": copy.deepcopy(q_LINK5_1),
             "R_LINK5_2": copy.deepcopy(R_link5_2),
             "P_LINK5_2": copy.deepcopy(p_link5_2),
+            "q_LINK5_2": copy.deepcopy(q_LINK5_2),
             "R_LINK6": copy.deepcopy(R_link6),
             "P_LINK6": copy.deepcopy(p_link6),
+            "q_LINK6": copy.deepcopy(q_LINK6),
             "R_LINK7": copy.deepcopy(R_link7),
             "P_LINK7": copy.deepcopy(p_link7),
+            "q_LINK7": copy.deepcopy(q_LINK7),
             "R_HAND": copy.deepcopy(R_hand),
             "P_HAND": copy.deepcopy(p_hand),
+            "q_HAND": copy.deepcopy(q_HAND),
             "R_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].rotation),
             "P_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].translation),
         }
@@ -291,10 +293,10 @@ class FR3CrudeSim(Env):
     def compute_crude_location(self, R_offset, p_offset, frame_id):
         # get link orientation and position
         _p = self.robot.data.oMf[frame_id].translation
-        R = self.robot.data.oMf[frame_id].rotation
+        _Rot = self.robot.data.oMf[frame_id].rotation
 
         # compute link transformation matrix
-        _T = np.hstack((R, _p[:, np.newaxis]))
+        _T = np.hstack((_Rot, _p[:, np.newaxis]))
         T = np.vstack((_T, np.array([[0.0, 0.0, 0.0, 1.0]])))
 
         # compute link offset transformation matrix
@@ -308,6 +310,9 @@ class FR3CrudeSim(Env):
         p = (T_mat @ np.array([[0.0], [0.0], [0.0], [1.0]]))[:3, 0]
 
         # compute crude model orientation
-        R = T_mat[:3, :3]
+        Rot = T_mat[:3, :3]
 
-        return p, R
+        # quaternion
+        q = Rotation.from_matrix(Rot).as_quat()
+
+        return p, Rot, q

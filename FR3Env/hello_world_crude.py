@@ -36,17 +36,33 @@ def axis_angle_from_rot_mat(rot_mat):
 
 
 def main():
-    env = FR3CrudeSim(render_mode="human")
+    env = FR3CrudeSim(render_mode="human", crude_model=False)
 
     package_directory = getDataPath()
     urdf_search_path = package_directory + "/robots"
     p.setAdditionalSearchPath(urdf_search_path)
-    sphere = p.loadURDF("sphere.urdf", useFixedBase=True)
-    p.resetBasePositionAndOrientation(sphere, [2, 2, 2], [0, 0, 0, 1])
 
+    # load bounding boxes
+    link5_1 = p.loadURDF("fr3_link5_1_crude.urdf", useFixedBase=True)
+    p.resetBasePositionAndOrientation(link5_1, [2, 2, 2], [0, 0, 0, 1])
+
+    link5_2 = p.loadURDF("fr3_link5_2_crude.urdf", useFixedBase=True)
+    p.resetBasePositionAndOrientation(link5_2, [2, 2, 2], [0, 0, 0, 1])
+
+    link6 = p.loadURDF("fr3_link6_crude.urdf", useFixedBase=True)
+    p.resetBasePositionAndOrientation(link6, [2, 2, 2], [0, 0, 0, 1])
+
+    link7 = p.loadURDF("fr3_link7_crude.urdf", useFixedBase=True)
+    p.resetBasePositionAndOrientation(link7, [2, 2, 2], [0, 0, 0, 1])
+
+    hand = p.loadURDF("fr3_hand_crude.urdf", useFixedBase=True)
+    p.resetBasePositionAndOrientation(hand, [2, 2, 2], [0, 0, 0, 1])
+
+    # reset environment
     info = env.reset()
 
-    p_end = np.array([[0.4], [0.0], [0.5]])
+    # set target position
+    p_end = np.array([[0.2], [-0.4], [0.2]])
 
     # get initial rotation and position
     q, dq, R_start, _p_start = info["q"], info["dq"], info["R_EE"], info["P_EE"]
@@ -54,7 +70,7 @@ def main():
 
     # Get target orientation based on initial orientation
     _R_end = (
-        R.from_euler("y", -90, degrees=True).as_matrix()
+        R.from_euler("x", 0, degrees=True).as_matrix()
         @ R.from_euler("z", 90, degrees=True).as_matrix()
         @ R_start
     )
@@ -129,9 +145,20 @@ def main():
             )
 
         p.resetBasePositionAndOrientation(
-            sphere, info["P_LINK5_2"].tolist(), [0, 0, 0, 1]
+            link5_1, info["P_LINK5_1"].tolist(), info["q_LINK5_1"].tolist()
         )
-        time.sleep(0.01)
+        p.resetBasePositionAndOrientation(
+            link5_2, info["P_LINK5_2"].tolist(), info["q_LINK5_2"].tolist()
+        )
+        p.resetBasePositionAndOrientation(
+            link6, info["P_LINK6"].tolist(), info["q_LINK6"].tolist()
+        )
+        p.resetBasePositionAndOrientation(
+            link7, info["P_LINK7"].tolist(), info["q_LINK7"].tolist()
+        )
+        p.resetBasePositionAndOrientation(
+            hand, info["P_HAND"].tolist(), info["q_HAND"].tolist()
+        )
 
     env.close()
 
