@@ -108,7 +108,8 @@ class FR3CrudeSim(Env):
         options: Optional[dict] = None,
         cameraDistance=1.4,
         cameraYaw=66.4,
-        cameraPitch=-16.2
+        cameraPitch=-16.2,
+        lookat=[0.0, 0.0, 0.0]
     ):
         super().reset(seed=seed)
 
@@ -133,9 +134,7 @@ class FR3CrudeSim(Env):
         info = self.get_info(q, dq)
 
         if self.record_path is not None:
-            p.resetDebugVisualizerCamera(
-                cameraDistance, cameraYaw, cameraPitch, [0.0, 0.0, 0.0]
-            )
+            p.resetDebugVisualizerCamera(cameraDistance, cameraYaw, cameraPitch, lookat)
 
             self.loggingId = p.startStateLogging(
                 p.STATE_LOGGING_VIDEO_MP4, self.record_path
