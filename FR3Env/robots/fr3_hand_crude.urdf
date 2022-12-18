@@ -10,7 +10,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0.00"/>
       <geometry>
-        <box size="0.16 0.24 0.18"/>
+        <box size="0.10 0.24 0.18"/>
       </geometry>
       <material name="cornflowerblue">
         <color rgba="0.3921 0.5843 0.9294 0.8"/>
