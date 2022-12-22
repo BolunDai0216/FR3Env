@@ -43,6 +43,12 @@ def main():
     p.setAdditionalSearchPath(urdf_search_path)
 
     # load bounding boxes
+    link3 = p.loadURDF("fr3_link3_crude.urdf", useFixedBase=True)
+    p.resetBasePositionAndOrientation(link3, [2, 2, 2], [0, 0, 0, 1])
+
+    link4 = p.loadURDF("fr3_link4_crude.urdf", useFixedBase=True)
+    p.resetBasePositionAndOrientation(link4, [2, 2, 2], [0, 0, 0, 1])
+
     link5_1 = p.loadURDF("fr3_link5_1_crude.urdf", useFixedBase=True)
     p.resetBasePositionAndOrientation(link5_1, [2, 2, 2], [0, 0, 0, 1])
 
@@ -144,6 +150,12 @@ def main():
                 ),
             )
 
+        p.resetBasePositionAndOrientation(
+            link3, info["P_LINK3"].tolist(), info["q_LINK3"].tolist()
+        )
+        p.resetBasePositionAndOrientation(
+            link4, info["P_LINK4"].tolist(), info["q_LINK4"].tolist()
+        )
         p.resetBasePositionAndOrientation(
             link5_1, info["P_LINK5_1"].tolist(), info["q_LINK5_1"].tolist()
         )

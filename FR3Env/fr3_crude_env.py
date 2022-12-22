@@ -65,6 +65,8 @@ class FR3CrudeSim(Env):
         self.n_j = p.getNumJoints(self.robotID)
 
         # frame ids
+        self.FR3_LINK3_FRAME_ID = 8
+        self.FR3_LINK4_FRAME_ID = 10
         self.FR3_LINK5_FRAME_ID = 12
         self.FR3_LINK6_FRAME_ID = 14
         self.FR3_LINK7_FRAME_ID = 16
@@ -187,6 +189,14 @@ class FR3CrudeSim(Env):
         f, g, M, Minv, nle = self.get_dynamics(q, dq)
 
         # compute the position and rotation of the crude models
+        p_link3, R_link3, q_LINK3 = self.compute_crude_location(
+            np.eye(3), np.array(([0.0], [0.0], [-0.145])), self.FR3_LINK3_FRAME_ID
+        )
+
+        p_link4, R_link4, q_LINK4 = self.compute_crude_location(
+            np.eye(3), np.array(([0.0], [0.0], [0.0])), self.FR3_LINK4_FRAME_ID
+        )
+
         p_link5_1, R_link5_1, q_LINK5_1 = self.compute_crude_location(
             np.eye(3), np.array(([0.0], [0.0], [-0.26])), self.FR3_LINK5_FRAME_ID
         )
@@ -219,6 +229,12 @@ class FR3CrudeSim(Env):
             "J_EE": jacobian,
             "dJ_EE": dJ,
             "pJ_EE": pinv_jac,
+            "R_LINK3": copy.deepcopy(R_link3),
+            "P_LINK3": copy.deepcopy(p_link3),
+            "q_LINK3": copy.deepcopy(q_LINK3),
+            "R_LINK4": copy.deepcopy(R_link4),
+            "P_LINK4": copy.deepcopy(p_link4),
+            "q_LINK4": copy.deepcopy(q_LINK4),
             "R_LINK5_1": copy.deepcopy(R_link5_1),
             "P_LINK5_1": copy.deepcopy(p_link5_1),
             "q_LINK5_1": copy.deepcopy(q_LINK5_1),
