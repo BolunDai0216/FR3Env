@@ -178,6 +178,24 @@ class FR3CrudeSim(Env):
         # Get Jacobian from grasp target frame
         # preprocessing is done in get_state_update_pinocchio()
         jacobian = self.robot.getFrameJacobian(self.EE_FRAME_ID, self.jacobian_frame)
+        jacobian_link3 = self.robot.getFrameJacobian(
+            self.FR3_LINK3_FRAME_ID, self.jacobian_frame
+        )
+        jacobian_link4 = self.robot.getFrameJacobian(
+            self.FR3_LINK4_FRAME_ID, self.jacobian_frame
+        )
+        jacobian_link5_1 = self.robot.getFrameJacobian(
+            self.FR3_LINK5_FRAME_ID, self.jacobian_frame
+        )
+        jacobian_link5_2 = self.robot.getFrameJacobian(
+            self.FR3_LINK5_FRAME_ID, self.jacobian_frame
+        )
+        jacobian_link6 = self.robot.getFrameJacobian(
+            self.FR3_LINK6_FRAME_ID, self.jacobian_frame
+        )
+        jacobian_link7 = self.robot.getFrameJacobian(
+            self.FR3_LINK7_FRAME_ID, self.jacobian_frame
+        )
 
         # Get pseudo-inverse of frame Jacobian
         pinv_jac = np.linalg.pinv(jacobian)
@@ -226,30 +244,36 @@ class FR3CrudeSim(Env):
             "M(q)^{-1}": Minv,
             "nle": nle,
             "G": self.robot.gravity(q),
-            "J_EE": jacobian,
-            "dJ_EE": dJ,
             "pJ_EE": pinv_jac,
             "R_LINK3": copy.deepcopy(R_link3),
             "P_LINK3": copy.deepcopy(p_link3),
             "q_LINK3": copy.deepcopy(q_LINK3),
+            "J_LINK3": jacobian_link3,
             "R_LINK4": copy.deepcopy(R_link4),
             "P_LINK4": copy.deepcopy(p_link4),
             "q_LINK4": copy.deepcopy(q_LINK4),
+            "J_LINK4": jacobian_link4,
             "R_LINK5_1": copy.deepcopy(R_link5_1),
             "P_LINK5_1": copy.deepcopy(p_link5_1),
             "q_LINK5_1": copy.deepcopy(q_LINK5_1),
+            "J_LINK5_1": jacobian_link5_1,
             "R_LINK5_2": copy.deepcopy(R_link5_2),
             "P_LINK5_2": copy.deepcopy(p_link5_2),
             "q_LINK5_2": copy.deepcopy(q_LINK5_2),
+            "J_LINK5_2": jacobian_link5_2,
             "R_LINK6": copy.deepcopy(R_link6),
             "P_LINK6": copy.deepcopy(p_link6),
             "q_LINK6": copy.deepcopy(q_LINK6),
+            "J_LINK6": jacobian_link6,
             "R_LINK7": copy.deepcopy(R_link7),
             "P_LINK7": copy.deepcopy(p_link7),
             "q_LINK7": copy.deepcopy(q_LINK7),
+            "J_LINK7": jacobian_link7,
             "R_HAND": copy.deepcopy(R_hand),
             "P_HAND": copy.deepcopy(p_hand),
             "q_HAND": copy.deepcopy(q_HAND),
+            "J_EE": jacobian,
+            "dJ_EE": dJ,
             "R_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].rotation),
             "P_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].translation),
         }
