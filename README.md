@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-- Core dependencies: `NumPy`, `SciPy`, `PyBullet`, `Pinocchio`, `Gymnasium`
+- Core dependencies: `NumPy`, `SciPy`, `PyBullet`, `Pinocchio`, `Gymnasium`, `pyquternion`
 - Dependencies to run the demos: `CasADi`, `ProxSuite`, 
 
 ## Installation
@@ -25,6 +25,30 @@ fr3env-waypoint-hierarchical-proxqp-demo
 
 https://user-images.githubusercontent.com/36321182/199758677-c325b83e-695f-4cad-b302-7c7ee6a30922.mp4
 
+## Simulate Images From Calibrated Cameras
+
+Cameras can be simulated and placed at various places in the environment. This environemtn provides two useful functions to make this task easiers. The first function converts the camera intrinsic paramters as found using ROS or OpenCV calibration procedure to a pybullet projection matrix and the other constructs the view matrix given the `[R|t]` paris:
+
+``` python
+from FR3Env.utils import render_utils
+
+'''
+K is the camera matrix as estimated using ROS/OpenCV, w,h are image width and height 
+during calibration, and near, far indicate the interest depth to be rendered''' 
+render_utils.projectionMatrix = cvK2BulletP(K, w, h, near, far)
+
+''' q and t are two lists representing the orientation and translation 
+as parameterized by ROS-TF conventions.'''
+render_utils.viewMatrix = cvPose2BulletView(q, t)
+```
+
+Using the computed matrices above, you can grab images from the environment as follows:
+
+``` python
+import pybullet as b
+_, _, rgb, depth, segmentation = b.getCameraImage(W, H, viewMatrix, projectionMatrix, shadow = True)
+```
+The function above returns the undistorted images, segmentation, and depth maps. 
 
 ## Lessons Learned
 
