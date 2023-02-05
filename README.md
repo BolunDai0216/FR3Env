@@ -27,7 +27,7 @@ https://user-images.githubusercontent.com/36321182/199758677-c325b83e-695f-4cad-
 
 ## Simulate Images From Calibrated Cameras
 
-Cameras can be simulated and placed at various places in the environment. This environemtn provides two useful functions to make this task easiers. The first function converts the camera intrinsic paramters as found using ROS or OpenCV calibration procedure to a pybullet projection matrix and the other constructs the view matrix given the `[R|t]` paris:
+Cameras can be simulated and placed at various places in the environment. Our simulator provides two useful functions to make this task easiers. The first function converts the camera intrinsic paramters as found using ROS or OpenCV calibration procedure to a pybullet projection matrix and the other constructs the view matrix given the `[R|t]` paris:
 
 ``` python
 from FR3Env.utils import render_utils
