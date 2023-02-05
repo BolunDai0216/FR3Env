@@ -45,8 +45,8 @@ render_utils.viewMatrix = cvPose2BulletView(q, t)
 Using the computed matrices above, you can grab images from the environment as follows:
 
 ``` python
-import pybullet as b
-_, _, rgb, depth, segmentation = b.getCameraImage(W, H, viewMatrix, projectionMatrix, shadow = True)
+import pybullet as p
+_, _, rgb, depth, segmentation = p.getCameraImage(W, H, viewMatrix, projectionMatrix, shadow = True)
 ```
 The function above returns the undistorted images, segmentation, and depth maps. 
 
