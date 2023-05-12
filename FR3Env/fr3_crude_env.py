@@ -135,9 +135,9 @@ class FR3CrudeSim(Env):
         q, dq = self.get_state_update_pinocchio()
         info = self.get_info(q, dq)
 
-        if self.record_path is not None:
-            p.resetDebugVisualizerCamera(cameraDistance, cameraYaw, cameraPitch, lookat)
+        p.resetDebugVisualizerCamera(cameraDistance, cameraYaw, cameraPitch, lookat)
 
+        if self.record_path is not None:
             self.loggingId = p.startStateLogging(
                 p.STATE_LOGGING_VIDEO_MP4, self.record_path
             )
