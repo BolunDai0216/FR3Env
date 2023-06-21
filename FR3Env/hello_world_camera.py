@@ -1,5 +1,6 @@
 import numpy as np
 import numpy.linalg as LA
+import pybullet as p
 from scipy.spatial.transform import Rotation as R
 
 from FR3Env.fr3_with_camera_env import FR3CameraSim
@@ -105,7 +106,7 @@ def main():
         tau[-2] = 0.0
 
         # Send joint commands to motor
-        info = env.step(tau)
+        info = env.step(tau, return_image=False)
         q, dq = info["q"], info["dq"]
 
         if i % 500 == 0:

@@ -72,6 +72,16 @@ class FR3CameraSim(Env):
         # Get frame ID for grasp target
         self.jacobian_frame = pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
 
+        # Get camera projection matrix
+        self.width = 1920
+        self.height = 1080
+        fov = 60
+        aspect = self.width / self.height
+        near = 0.02
+        far = 20
+
+        self.projection_matrix = p.computeProjectionMatrixFOV(fov, aspect, near, far)
+
         # Set observation and action space
         obs_low_q = []
         obs_low_dq = []
@@ -279,6 +289,9 @@ class FR3CameraSim(Env):
             "dJ_EE": dJ,
             "R_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].rotation),
             "P_EE": copy.deepcopy(self.robot.data.oMf[self.EE_FRAME_ID].translation),
+            "R_CAMERA": copy.deepcopy(R_camera),
+            "P_CAMERA": copy.deepcopy(p_camera),
+            "q_CAMERA": copy.deepcopy(q_CAMERA),
             "J_CAMERA": jacobian_camera,
         }
 
@@ -297,12 +310,33 @@ class FR3CameraSim(Env):
 
         return f, g, M, Minv, nle
 
-    def step(self, action):
+    def step(self, action, return_image=False):
         self.send_joint_command(action)
         p.stepSimulation()
 
         q, dq = self.get_state_update_pinocchio()
         info = self.get_info(q, dq)
+
+        if return_image:
+            camera_target_position = (
+                info["R_CAMERA"] @ np.array([[0], [1], [0]])
+                + info["P_CAMERA"][:, np.newaxis]
+            )
+
+            view_matrix = p.computeViewMatrix(
+                cameraEyePosition=info["P_CAMERA"],
+                cameraTargetPosition=camera_target_position,
+                cameraUpVector=[0, 0, 1],
+            )
+
+            img = p.getCameraImage(
+                self.width,
+                self.height,
+                viewMatrix=view_matrix,
+                projectionMatrix=self.projection_matrix,
+            )
+
+            info["img"] = img
 
         return info
 
