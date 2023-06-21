@@ -105,7 +105,7 @@ def main():
         tau[-2] = 0.0
 
         # Send joint commands to motor
-        if i % 4 == 0:
+        if i % 50 == 0:
             info = env.step(tau, return_image=True)
         else:
             info = env.step(tau)

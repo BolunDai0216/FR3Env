@@ -22,7 +22,7 @@ class FR3CameraSim(Env):
         if render_mode == "human":
             self.client = p.connect(p.GUI)
             # Improves rendering performance on M1 Macs
-            p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
+            p.configureDebugVisualizer(p.COV_ENABLE_GUI, 1)
         else:
             self.client = p.connect(p.DIRECT)
 
@@ -82,8 +82,8 @@ class FR3CameraSim(Env):
         self.jacobian_frame = pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
 
         # Get camera projection matrix
-        self.width = 64
-        self.height = 64
+        self.width = 512
+        self.height = 512
         fov = 60
         aspect = self.width / self.height
         near = 0.02
@@ -329,7 +329,13 @@ class FR3CameraSim(Env):
         if return_image:
             R_camera = (
                 info["R_CAMERA"]
-                @ np.array([[1.0, 0.0, 0.0], [0.0, 0.0, 1.0], [0.0, -1.0, 0.0]])
+                @ np.array(
+                    [
+                        [1.0, 0.0, 0.0],
+                        [0.0, 0.0017453, 0.9999985],
+                        [0.0, -0.9999985, 0.0017453],
+                    ]
+                )
                 @ np.array([[-1.0, 0.0, 0.0], [0.0, -1.0, 0.0], [0.0, 0.0, 1.0]])
             )
             q = Rotation.from_matrix(R_camera).as_quat()
