@@ -21,7 +21,7 @@ class FR3CameraSim(Env):
         if render_mode == "human":
             self.client = p.connect(p.GUI)
             # Improves rendering performance on M1 Macs
-            p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
+            p.configureDebugVisualizer(p.COV_ENABLE_GUI, 1)
         else:
             self.client = p.connect(p.DIRECT)
 
@@ -41,6 +41,14 @@ class FR3CameraSim(Env):
         urdf_search_path = package_directory + "/robots"
         p.setAdditionalSearchPath(urdf_search_path)
         self.robotID = p.loadURDF("{}.urdf".format(model_name), useFixedBase=True)
+
+        # Load AprilTag board
+        self.april_tag_ID = p.loadURDF("april_tag.urdf", useFixedBase=True)
+        april_tag_quat = p.getQuaternionFromEuler([np.pi / 2, 0, np.pi / 2])
+
+        p.resetBasePositionAndOrientation(
+            self.april_tag_ID, [0.35, 0.0, 0.005], april_tag_quat
+        )
 
         # Build pin_robot
         self.robot = RobotWrapper.BuildFromURDF(robot_URDF, package_directory)
@@ -336,6 +344,8 @@ class FR3CameraSim(Env):
                 projectionMatrix=self.projection_matrix,
             )
 
+            rgba_data = img[2]
+            img = np.reshape(rgba_data, (self.height, self.width, 4))
             info["img"] = img
 
         return info
