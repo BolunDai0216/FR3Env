@@ -10,6 +10,7 @@ from pinocchio.robot_wrapper import RobotWrapper
 from scipy.spatial.transform import Rotation
 
 from FR3Env import getDataPath
+from FR3Env.utils.render_utils import cvPose2BulletView
 
 
 class FR3CameraSim(Env):
@@ -21,7 +22,7 @@ class FR3CameraSim(Env):
         if render_mode == "human":
             self.client = p.connect(p.GUI)
             # Improves rendering performance on M1 Macs
-            p.configureDebugVisualizer(p.COV_ENABLE_GUI, 1)
+            p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
         else:
             self.client = p.connect(p.DIRECT)
 
@@ -81,12 +82,12 @@ class FR3CameraSim(Env):
         self.jacobian_frame = pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
 
         # Get camera projection matrix
-        self.width = 1920
-        self.height = 1080
+        self.width = 64
+        self.height = 64
         fov = 60
         aspect = self.width / self.height
         near = 0.02
-        far = 20
+        far = 1.0
 
         self.projection_matrix = p.computeProjectionMatrixFOV(fov, aspect, near, far)
 
@@ -326,17 +327,15 @@ class FR3CameraSim(Env):
         info = self.get_info(q, dq)
 
         if return_image:
-            camera_target_position = (
-                info["R_CAMERA"] @ np.array([[0], [1], [0]])
-                + info["P_CAMERA"][:, np.newaxis]
+            R_camera = (
+                info["R_CAMERA"]
+                @ np.array([[1.0, 0.0, 0.0], [0.0, 0.0, 1.0], [0.0, -1.0, 0.0]])
+                @ np.array([[-1.0, 0.0, 0.0], [0.0, -1.0, 0.0], [0.0, 0.0, 1.0]])
             )
+            q = Rotation.from_matrix(R_camera).as_quat()
+            view_matrix = cvPose2BulletView(q, info["P_CAMERA"])
 
-            view_matrix = p.computeViewMatrix(
-                cameraEyePosition=info["P_CAMERA"],
-                cameraTargetPosition=camera_target_position,
-                cameraUpVector=[0, 0, 1],
-            )
-
+            # TODO: figure out why it gets stuck here
             img = p.getCameraImage(
                 self.width,
                 self.height,
