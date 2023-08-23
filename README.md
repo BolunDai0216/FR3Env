@@ -57,3 +57,17 @@ The function above returns the undistorted images, segmentation, and depth maps.
 ## Credits
 
 The FR3 URDF file is generated using [`fr3-urdf-pybullet`](https://github.com/RumailM/fr3-urdf-pybullet)
+
+## Citation
+
+To cite FR3Env in your academic research, please use the following bibtex entry:
+
+```
+@article{DaiKKGTK23,
+  author       = {Bolun Dai and Rooholla Khorrambakht and Prashanth Krishnamurthy and Vin{\'{\i}}cius Gon{\c{c}}alves and Anthony Tzes and Farshad Khorrami},
+  title        = {Safe Navigation and Obstacle Avoidance Using Differentiable Optimization Based Control Barrier Functions},
+  journal      = {CoRR},
+  volume       = {abs/2304.08586},
+  year         = {2023},
+}
+```
