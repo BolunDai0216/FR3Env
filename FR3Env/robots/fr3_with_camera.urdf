@@ -414,14 +414,14 @@
         <mass value="0.072"/>
         <inertia ixx="5.235e-5" ixy="0" ixz="0" iyy="5.235e-5" iyz="0" izz="7.5e-6"/>
     </inertial>
-    <visual>
+    <!-- <visual>
       <geometry>
         <mesh filename="package://robots/meshes/visual/d435.obj"/>
       </geometry>
       <material name="panda_white">
         <color rgba="1. 1. 1. 1."/>
       </material>
-    </visual>
+    </visual> -->
   </link>
 
   <joint name="fr3_hand_camera_joint" type="fixed">
