@@ -18,7 +18,11 @@ class FR3CrudeSim(Env):
     }
 
     def __init__(
-        self, render_mode: Optional[str] = None, record_path=None, crude_model=True
+        self,
+        render_mode: Optional[str] = None,
+        record_path=None,
+        crude_model=True,
+        base_offset_pos=[0, 0, 0],
     ):
         if render_mode == "human":
             self.client = p.connect(p.GUI)
@@ -46,6 +50,18 @@ class FR3CrudeSim(Env):
         urdf_search_path = package_directory + "/robots"
         p.setAdditionalSearchPath(urdf_search_path)
         self.robotID = p.loadURDF("{}.urdf".format(model_name), useFixedBase=True)
+
+        # Set base offset
+        _base_pos, _ = p.getBasePositionAndOrientation(self.robotID)
+
+        base_pos = [
+            _base_pos[0] + base_offset_pos[0],
+            _base_pos[1] + base_offset_pos[1],
+            _base_pos[2] + base_offset_pos[2],
+        ]
+
+        p.resetBasePositionAndOrientation(self.robotID, base_pos, [0, 0, 0, 1])
+        self.T_offset = self.get_transformation_matrix(base_offset_pos, [0, 0, 0, 1])
 
         # Build pin_robot
         self.robot = RobotWrapper.BuildFromURDF(robot_URDF, package_directory)
@@ -354,7 +370,7 @@ class FR3CrudeSim(Env):
         TB = np.vstack((_TB, np.array([[0.0, 0.0, 0.0, 1.0]])))
 
         # get transformation matrix
-        T_mat = T @ TB
+        T_mat = self.T_offset @ T @ TB
 
         # compute crude model location
         p = (T_mat @ np.array([[0.0], [0.0], [0.0], [1.0]]))[:3, 0]
@@ -366,3 +382,10 @@ class FR3CrudeSim(Env):
         q = Rotation.from_matrix(Rot).as_quat()
 
         return p, Rot, q
+
+    def get_transformation_matrix(self, position, quaternion):
+        T = np.eye(4)
+        T[:3, :3] = Rotation.from_quat(quaternion).as_matrix()
+        T[:3, -1] = np.array(position)
+
+        return T
