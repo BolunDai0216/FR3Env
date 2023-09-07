@@ -14,7 +14,7 @@ def main():
 
     # Load Franka Research 3 Robot
     file_directory = str(pathlib.Path(__file__).parent.resolve())
-    robot_URDF = file_directory + "/robots/fr3.urdf"
+    robot_URDF = file_directory + "/robots/fr3_with_bounding_boxes.urdf"
     robotID = p.loadURDF(robot_URDF, useFixedBase=True)
 
     # Get number of joints
