@@ -60,9 +60,6 @@ class FR3BoundingBoxSim(Env):
         # Get number of joints
         self.n_j = p.getNumJoints(self.robotID)
 
-        for i, frame in enumerate(self.robot.model.frames):
-            print(i, frame.name)
-
         # frame ids
         self.FR3_LINK3_FRAME_ID = self.robot.model.getFrameId("fr3_link3")
         self.FR3_LINK3_BOUNDING_BOX_FRAME_ID = self.robot.model.getFrameId(
