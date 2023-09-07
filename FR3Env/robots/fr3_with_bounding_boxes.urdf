@@ -121,7 +121,7 @@
   </joint>
 
   <link name="fr3_link3_bounding_box">
-    <visual>
+    <!-- <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://robots/meshes/bounding_box/fr3_link3_ellipsoid.obj"/>
@@ -129,7 +129,7 @@
       <material name="cornflowerblue">
         <color rgba="0.3921 0.5843 0.9294 0.8"/>
       </material>
-    </visual>
+    </visual> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="1e-10"/>
@@ -175,7 +175,7 @@
   </joint>
 
   <link name="fr3_link4_bounding_box">
-    <visual>
+    <!-- <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://robots/meshes/bounding_box/fr3_link4_ellipsoid.obj"/>
@@ -183,7 +183,7 @@
       <material name="cornflowerblue">
         <color rgba="0.3921 0.5843 0.9294 0.8"/>
       </material>
-    </visual>
+    </visual> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="1e-10"/>
@@ -229,7 +229,7 @@
   </joint>
 
   <link name="fr3_link5_1_bounding_box">
-    <visual>
+    <!-- <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://robots/meshes/bounding_box/fr3_link5_1_ellipsoid.obj"/>
@@ -237,7 +237,7 @@
       <material name="cornflowerblue">
         <color rgba="0.3921 0.5843 0.9294 0.8"/>
       </material>
-    </visual>
+    </visual> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="1e-10"/>
@@ -252,7 +252,7 @@
   </joint>
 
   <link name="fr3_link5_2_bounding_box">
-    <visual>
+    <!-- <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://robots/meshes/bounding_box/fr3_link5_2_ellipsoid.obj"/>
@@ -260,7 +260,7 @@
       <material name="cornflowerblue">
         <color rgba="0.3921 0.5843 0.9294 0.8"/>
       </material>
-    </visual>
+    </visual> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="1e-10"/>
@@ -306,7 +306,7 @@
   </joint>
 
   <link name="fr3_link6_bounding_box">
-    <visual>
+    <!-- <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://robots/meshes/bounding_box/fr3_link6_ellipsoid.obj"/>
@@ -314,7 +314,7 @@
       <material name="cornflowerblue">
         <color rgba="0.3921 0.5843 0.9294 0.8"/>
       </material>
-    </visual>
+    </visual> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="1e-10"/>
@@ -360,7 +360,7 @@
   </joint>
 
   <link name="fr3_link7_bounding_box">
-    <visual>
+    <!-- <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://robots/meshes/bounding_box/fr3_link7_ellipsoid.obj"/>
@@ -368,7 +368,7 @@
       <material name="cornflowerblue">
         <color rgba="0.3921 0.5843 0.9294 0.8"/>
       </material>
-    </visual>
+    </visual> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="1e-10"/>
@@ -439,7 +439,7 @@
   </joint>
 
   <link name="fr3_hand_bounding_box">
-    <visual>
+    <!-- <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <sphere radius="0.12"/>
@@ -447,7 +447,7 @@
       <material name="cornflowerblue">
         <color rgba="0.3921 0.5843 0.9294 0.8"/>
       </material>
-    </visual>
+    </visual> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="1e-10"/>
