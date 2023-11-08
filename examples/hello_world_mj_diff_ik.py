@@ -1,8 +1,8 @@
 import time
 
 import numpy as np
-from ndcurves import SE3Curve
 import pinocchio as pin
+from ndcurves import SE3Curve
 
 from FR3Env.controller import DiffIK
 from FR3Env.fr3_mj_env import FR3MuJocoEnv
@@ -13,8 +13,9 @@ def main():
     info = env.reset()
 
     T_init = pin.SE3(info["R_EE"].copy(), info["P_EE"].copy())
+    R_end = np.diag([1.0, -1.0, -1.0])
     p_end = np.array([[0.4], [0.3], [0.3]])
-    T_end = pin.SE3(info["R_EE"].copy(), p_end)
+    T_end = pin.SE3(R_end, p_end)
     t_init = 0.0
     t_end = 5.0
     curve = SE3Curve(T_init, T_end, t_init, t_end)
@@ -39,20 +40,20 @@ def main():
         info = env.step(tau, finger_pos)
         time.sleep(1e-3)
 
-        if i == 3300:
+        if i == 4000:
             T_init = pin.SE3(info["R_EE"].copy(), info["P_EE"].copy())
             p_end = np.array([[0.4], [-0.3], [0.3]])
-            T_end = pin.SE3(info["R_EE"].copy(), p_end)
-            t_init = t
-            t_end = t + 6.0
+            T_end = pin.SE3(R_end, p_end)
+            t_init = i * 2e-3
+            t_end = i * 2e-3 + 5.0
             curve = SE3Curve(T_init, T_end, t_init, t_end)
 
-        if i == 6600:
+        if i == 8000:
             T_init = pin.SE3(info["R_EE"].copy(), info["P_EE"].copy())
             p_end = np.array([[0.3], [0.0], [0.5]])
-            T_end = pin.SE3(info["R_EE"].copy(), p_end)
-            t_init = t
-            t_end = t + 5.0
+            T_end = pin.SE3(R_end, p_end)
+            t_init = i * 2e-3
+            t_end = i * 2e-3 + 5.0
             curve = SE3Curve(T_init, T_end, t_init, t_end)
 
     env.close()
