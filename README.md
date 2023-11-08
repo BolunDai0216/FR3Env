@@ -73,3 +73,31 @@ To cite FR3Env in your academic research, please use the following bibtex entry:
   pages        = {5376-5383},
 }
 ```
+
+## Known Issues
+
+When running the MuJoCo viewer on MacOS, you may encounter the following error:
+
+```bash
+OSError: dlopen(/System/Library/OpenGL.framework/OpenGL, 0x0006): tried: '/System/Library/OpenGL.framework/OpenGL' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/System/Library/OpenGL.framework/OpenGL' (no such file), '/System/Library/OpenGL.framework/OpenGL' (no such file, not in dyld cache)
+```
+
+If you are using a conda environment, you can fix this by going to (replace `3.8` with your python version)
+
+```bash
+cd $CONDA_PREFIX/lib/python3.8/site-packages/OpenGL/platform
+```
+
+and change the line of `_loadLibraryWindows()` in `ctypesloader.py` from
+
+```python
+fullName = util.find_library( name )
+```
+
+to 
+
+```python
+fullName = '/System/Library/Frameworks/OpenGL.framework/OpenGL'
+```
+
+For more details, see [here](https://stackoverflow.com/a/64021312).
