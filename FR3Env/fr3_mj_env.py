@@ -26,6 +26,7 @@ class FR3MuJocoEnv:
         else:
             self.render = False
 
+        self.model.opt.gravity[2] = -9.81
         self.jacobian_frame = pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
         self.EE_FRAME_ID = self.pin_robot.model.getFrameId("fr3_hand_tcp")
 
