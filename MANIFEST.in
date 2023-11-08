@@ -2,4 +2,7 @@ include FR3Env/robots/meshes/collision/*.stl
 include FR3Env/robots/meshes/visual/*.mtl
 include FR3Env/robots/meshes/visual/*.png
 include FR3Env/robots/meshes/visual/*.obj
+include FR3Env/robots/mj_assets/*.obj
+include FR3Env/robots/mj_assets/*.stl
 include FR3Env/robots/*.urdf
+include FR3Env/robots/*.xml
