@@ -1,13 +1,7 @@
-import time
-from pdb import set_trace
-
 import numpy as np
 import numpy.linalg as LA
-import pybullet as p
-import pybullet_data
 from scipy.spatial.transform import Rotation as R
 
-from FR3Env import getDataPath
 from FR3Env.fr3_bounding_box_env import FR3BoundingBoxSim
 
 

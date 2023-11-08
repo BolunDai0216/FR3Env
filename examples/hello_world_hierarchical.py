@@ -1,10 +1,10 @@
 import numpy as np
 import numpy.linalg as LA
+from hello_world import alpha_func, axis_angle_from_rot_mat
 from scipy.spatial.transform import Rotation as R
 
 from FR3Env.controller.qp_solver import QPSolver
 from FR3Env.fr3_env import FR3Sim
-from FR3Env.hello_world import alpha_func, axis_angle_from_rot_mat
 
 
 def main():
