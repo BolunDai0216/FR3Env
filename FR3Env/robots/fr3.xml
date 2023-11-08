@@ -3,11 +3,19 @@
 
   <option integrator="implicitfast"/>
 
+  <statistic center="0.3 0 0.4" extent="1"/>
+
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global azimuth="120" elevation="-20"/>
+  </visual>
+
   <default>
     <default class="fr3">
       <material specular="0.5" shininess="0.25"/>
       <joint armature="0.1" damping="1" axis="0 0 1" range="-2.8973 2.8973"/>
-      <general dyntype="none" biastype="affine" ctrlrange="-2.8973 2.8973" forcerange="-87 87"/>
+
       <default class="finger">
         <joint axis="0 1 0" type="slide" range="0 0.04"/>
       </default>
@@ -15,6 +23,7 @@
       <default class="visual">
         <geom type="mesh" contype="0" conaffinity="0" group="2"/>
       </default>
+
       <default class="collision">
         <geom type="mesh" group="3"/>
         <default class="fingertip_pad_collision_1">
@@ -113,10 +122,16 @@
     <mesh file="hand_4.obj"/>
     <mesh file="finger_0.obj"/>
     <mesh file="finger_1.obj"/>
+
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
   </asset>
 
   <worldbody>
     <light name="top" pos="0 0 2" mode="trackcom"/>
+    <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
+    <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
     
     <body name="link0" childclass="fr3">
       <inertial mass="0.629769" pos="-0.041018 -0.00014 0.049974"
@@ -274,13 +289,13 @@
   </equality>
 
   <actuator>
-    <general class="fr3" name="actuator1" joint="joint1" gainprm="4500" biasprm="0 -4500 -450" ctrlrange="-2.3093 2.3093" forcerange="-87 87"/>
-    <general class="fr3" name="actuator2" joint="joint2" gainprm="4500" biasprm="0 -4500 -450" ctrlrange="-1.5133 1.5133" forcerange="-87 87"/>
-    <general class="fr3" name="actuator3" joint="joint3" gainprm="3500" biasprm="0 -3500 -350" ctrlrange="-2.4937 2.4937" forcerange="-87 87"/>
-    <general class="fr3" name="actuator4" joint="joint4" gainprm="3500" biasprm="0 -3500 -350" ctrlrange="-2.7478 -0.4461" forcerange="-87 87"/>
-    <general class="fr3" name="actuator5" joint="joint5" gainprm="2000" biasprm="0 -2000 -200" ctrlrange="-2.4800 2.4800" forcerange="-12 12"/>
-    <general class="fr3" name="actuator6" joint="joint6" gainprm="2000" biasprm="0 -2000 -200" ctrlrange="0.8521 4.2094" forcerange="-12 12"/>
-    <general class="fr3" name="actuator7" joint="joint7" gainprm="2000" biasprm="0 -2000 -200" ctrlrange="-2.6895 2.6895" forcerange="-12 12"/>
+    <motor class="fr3" name="actuator1" joint="joint1" ctrlrange="-2.3093 2.3093" forcerange="-87 87"/>
+    <motor class="fr3" name="actuator2" joint="joint2" ctrlrange="-1.5133 1.5133" forcerange="-87 87"/>
+    <motor class="fr3" name="actuator3" joint="joint3" ctrlrange="-2.4937 2.4937" forcerange="-87 87"/>
+    <motor class="fr3" name="actuator4" joint="joint4" ctrlrange="-2.7478 -0.4461" forcerange="-87 87"/>
+    <motor class="fr3" name="actuator5" joint="joint5" ctrlrange="-2.4800 2.4800" forcerange="-12 12"/>
+    <motor class="fr3" name="actuator6" joint="joint6" ctrlrange="0.8521 4.2094" forcerange="-12 12"/>
+    <motor class="fr3" name="actuator7" joint="joint7" ctrlrange="-2.6895 2.6895" forcerange="-12 12"/>
     <!-- Remap original ctrlrange (0, 0.04) to (0, 255): 0.04 * 100 / 255 = 0.01568627451 -->
     <general class="fr3" name="actuator8" tendon="split" forcerange="-100 100" ctrlrange="0 255" gainprm="0.01568627451 0 0" biasprm="0 -100 -10"/>
   </actuator>
