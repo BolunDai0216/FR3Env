@@ -1,3 +1,0 @@
-Wed Nov  8 11:14:18 2023
-WARNING: mju_openResource: unknown file './robots/fr3.xml'
-

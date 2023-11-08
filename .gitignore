@@ -131,5 +131,5 @@ dmypy.json
 # MacOS
 .DS_Store
 
-# URDF
-.urdf
+# MuJoCo
+MUJOCO_LOG.txt
