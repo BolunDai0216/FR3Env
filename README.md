@@ -3,19 +3,17 @@
 ## Dependencies
 
 - Core dependencies: `NumPy`, `SciPy`, `PyBullet`, `Pinocchio`, `Gymnasium`, `pyquaternion`, `MuJoCo`
-- Dependencies to run the demos: `ProxSuite`, 
+- Dependencies to run the demos: `ProxSuite`, `ndcurves`.
 
 ## Installation
 
-To install this package, first install the dependencies. `NumPy`, `MuJoCo`, `SciPy`, `PyBullet`, and `Gymnasium` can be installed while running the setup code below. It is recommended to install `Pinocchio`, and `ProxSuite` using conda. Then, run the following commands
+To install this package, first install the dependencies. `NumPy`, `MuJoCo`, `SciPy`, `PyBullet`, `Pinocchio`, and `ProxSuite`, `ndcurves`, and `Gymnasium` can be installed while running the setup code below. It is recommended to install everything within a conda environment. Then, run the following commands
 
 ```console
 git clone https://github.com/BolunDai0216/FR3Env.git
 cd FR3Env
 python3 -m pip install .
 ```
-
-It is suggested to install this package within a `conda` virtual environment, since it is easier to install the dependencies (especially `Pinocchio`) using `conda`.
 
 ## Run the demo
 
