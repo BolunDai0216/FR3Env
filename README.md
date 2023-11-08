@@ -25,6 +25,12 @@ mjpython examples/waypoint_hierarchical_proxqp_demo.py
 
 https://user-images.githubusercontent.com/36321182/199758677-c325b83e-695f-4cad-b302-7c7ee6a30922.mp4
 
+```console
+python examples/hello_world_mj_diff_ik.py
+```
+
+https://github.com/BolunDai0216/FR3Env/assets/36321182/2aedb089-f50e-4658-8b45-e0b50ba16540
+
 ## Simulate Images From Calibrated Cameras
 
 Cameras can be simulated and placed at various places in the environment. Our simulator provides two useful functions to make this task easiers. The first function converts the camera intrinsic paramters as found using ROS or OpenCV calibration procedure to a pybullet projection matrix and the other constructs the view matrix given the `[R|t]` paris:
