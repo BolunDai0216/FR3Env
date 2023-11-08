@@ -11,10 +11,12 @@ from FR3Env import getDataPath
 
 
 class FR3MuJocoEnv:
-    def __init__(self, render=True, urdf_name="fr3"):
+    def __init__(self, render=True, xml_name="fr3", urdf_name="fr3"):
         package_directory = getDataPath()
 
-        self.model = mujoco.MjModel.from_xml_path(package_directory + "/robots/fr3.xml")
+        self.model = mujoco.MjModel.from_xml_path(
+            package_directory + f"/robots/{xml_name}.xml"
+        )
         self.data = mujoco.MjData(self.model)
 
         robot_URDF = package_directory + "/robots/{}.urdf".format(urdf_name)
