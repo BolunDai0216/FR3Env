@@ -1,4 +1,5 @@
 import time
+from copy import deepcopy
 
 import mujoco
 import mujoco.viewer
@@ -25,13 +26,16 @@ class FR3MuJocoEnv:
         else:
             self.render = False
 
+        self.jacobian_frame = pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
+        self.EE_FRAME_ID = self.pin_robot.model.getFrameId("fr3_hand_tcp")
+
     def reset(self):
-        self.q_nominal = target = np.array(
+        self.q_nominal = np.array(
             [0.0, -0.785398163, 0.0, -2.35619449, 0.0, 1.57079632679, 0.785398163397]
         )
 
         for i in range(7):
-            self.data.qpos[i] = target[i]
+            self.data.qpos[i] = self.q_nominal[i]
 
         self.data.qpos[7] = 0.0
         self.data.qpos[8] = 0.0
@@ -73,6 +77,14 @@ class FR3MuJocoEnv:
     def get_info(self, q, dq):
         M, Minv, nle = self.get_dynamics(q, dq)
 
+        # preprocessing is done in update_pinocchio()
+        jacobian = self.pin_robot.getFrameJacobian(
+            self.EE_FRAME_ID, self.jacobian_frame
+        )
+
+        # Get pseudo-inverse of frame Jacobian
+        pinv_jac = np.linalg.pinv(jacobian)
+
         info = {
             "q": q,
             "dq": dq,
@@ -80,6 +92,10 @@ class FR3MuJocoEnv:
             "M(q)^{-1}": Minv,
             "nle": nle,
             "G": self.pin_robot.gravity(q),
+            "J_EE": jacobian,
+            "pJ_EE": pinv_jac,
+            "R_EE": deepcopy(self.pin_robot.data.oMf[self.EE_FRAME_ID].rotation),
+            "P_EE": deepcopy(self.pin_robot.data.oMf[self.EE_FRAME_ID].translation),
         }
 
         return info
