@@ -20,13 +20,13 @@ It is suggested to install this package within a `conda` virtual environment, si
 ## Run the demo
 
 ```console
-mjpython examples/waypoint_hierarchical_proxqp_demo.py
+python examples/waypoint_hierarchical_proxqp_demo.py
 ```
 
 https://user-images.githubusercontent.com/36321182/199758677-c325b83e-695f-4cad-b302-7c7ee6a30922.mp4
 
 ```console
-python examples/hello_world_mj_diff_ik.py
+mjpython examples/hello_world_mj_diff_ik.py
 ```
 
 https://github.com/BolunDai0216/FR3Env/assets/36321182/2aedb089-f50e-4658-8b45-e0b50ba16540
