@@ -52,10 +52,9 @@ class FR3MuJocoEnv:
         return info
 
     def step(self, tau, finger_pos):
-        finger_control = finger_pos * np.ones(2) - self.data.qpos[7:9]
-        frc_applied = np.append(tau, finger_control)
+        frc_applied = np.append(tau, finger_pos)
 
-        self.data.qfrc_applied[:9] = frc_applied
+        self.data.ctrl[:] = frc_applied
         mujoco.mj_step(self.model, self.data)
         self.viewer.sync()
 

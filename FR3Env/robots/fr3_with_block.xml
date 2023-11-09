@@ -279,8 +279,8 @@
 
     <body name="block" pos="0.4 0.4 0.0125">
       <joint type="free" damping="1"/>
-      <!-- <inertial mass="0.01" pos="0 0 0" fullinertia="1.04e-6 1.04e-6 1.04e-6 0.0 0.0 0.0"/> -->
-      <geom type="box" size="0.025 0.025 0.025" pos="0 0 0" mass="0.001" material="block_red"/>
+      <inertial mass="0.01" pos="0 0 0" fullinertia="1.04e-6 1.04e-6 1.04e-6 0.0 0.0 0.0"/>
+      <geom type="box" size="0.025 0.025 0.025" pos="0 0 0" material="block_red"/>
     </body>
   </worldbody>
 
@@ -296,20 +296,19 @@
   </equality>
 
   <actuator>
-    <motor class="fr3" name="actuator1" joint="joint1" ctrlrange="-2.3093 2.3093" forcerange="-87 87"/>
-    <motor class="fr3" name="actuator2" joint="joint2" ctrlrange="-1.5133 1.5133" forcerange="-87 87"/>
-    <motor class="fr3" name="actuator3" joint="joint3" ctrlrange="-2.4937 2.4937" forcerange="-87 87"/>
-    <motor class="fr3" name="actuator4" joint="joint4" ctrlrange="-2.7478 -0.4461" forcerange="-87 87"/>
-    <motor class="fr3" name="actuator5" joint="joint5" ctrlrange="-2.4800 2.4800" forcerange="-12 12"/>
-    <motor class="fr3" name="actuator6" joint="joint6" ctrlrange="0.8521 4.2094" forcerange="-12 12"/>
-    <motor class="fr3" name="actuator7" joint="joint7" ctrlrange="-2.6895 2.6895" forcerange="-12 12"/>
-    <!-- Remap original ctrlrange (0, 0.04) to (0, 255): 0.04 * 100 / 255 = 0.01568627451 -->
-    <general class="fr3" name="actuator8" tendon="split" forcerange="-100 100" ctrlrange="0 255" gainprm="0.01568627451 0 0" biasprm="0 -100 -10"/>
+    <motor class="fr3" name="actuator1" joint="joint1" ctrlrange="-87 87" forcerange="-87 87"/>
+    <motor class="fr3" name="actuator2" joint="joint2" ctrlrange="-87 87" forcerange="-87 87"/>
+    <motor class="fr3" name="actuator3" joint="joint3" ctrlrange="-87 87" forcerange="-87 87"/>
+    <motor class="fr3" name="actuator4" joint="joint4" ctrlrange="-87 87" forcerange="-87 87"/>
+    <motor class="fr3" name="actuator5" joint="joint5" ctrlrange="-12 12" forcerange="-12 12"/>
+    <motor class="fr3" name="actuator6" joint="joint6" ctrlrange="-12 12" forcerange="-12 12"/>
+    <motor class="fr3" name="actuator7" joint="joint7" ctrlrange="-12 12" forcerange="-12 12"/>
+    <position class="fr3" name="actuator8" tendon="split" forcerange="-100 100" ctrlrange="0 0.04" kp="10"/>
   </actuator>
 
-  <!-- <keyframe>
-    <key name="home" qpos="0 0 0 -1.57079 0 1.57079 -0.7853 0.04 0.04" ctrl="0 0 0 -1.57079 0 1.57079 -0.7853 255"/>
-  </keyframe> -->
+  <keyframe>
+    <key name="home" qpos="0 0 0 -1.57079 0 1.57079 -0.7853 0.04 0.04 0.4 0.4 0.125 1.0 0.0 0.0 0.0" ctrl="0 0 0 -1.57079 0 1.57079 -0.7853 255"/>
+  </keyframe>
 
 </mujoco>
 
