@@ -1,5 +1,6 @@
 import numpy as np
 import pinocchio as pin
+import mujoco
 from ndcurves import SE3Curve
 
 from FR3Env.controller import DiffIK
@@ -36,6 +37,9 @@ def main():
         tau, finger_pos = _tau[:7], 0.0
 
         info = env.step(tau, finger_pos)
+
+        # pixels = env.get_depth_image(camera="franka_camera")
+        # env.show_depth_img(pixels)
 
         if i == 4000:
             T_init = pin.SE3(info["R_EE"].copy(), info["P_EE"].copy())

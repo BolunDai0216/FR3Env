@@ -114,17 +114,18 @@ class FR3MuJocoEnv:
 
         return M, Minv, nle
 
-    def get_depth_image(self):
+    def get_depth_image(self, camera=-1, scene_option=None):
         if self.renderer is None:
             self.renderer = mujoco.Renderer(self.model)
             self.renderer.enable_depth_rendering()
 
-        self.renderer.update_scene(self.data)
+        self.renderer.update_scene(self.data, camera=camera, scene_option=scene_option)
         depth = self.renderer.render()
 
         # process depth image
         depth -= depth.min()
-        depth /= 2 * depth[depth <= 1].mean()
+        depth = np.clip(depth, 0.0, 4.0) / 4.0
+        # depth /= 2 * depth[depth <= 1].mean()
         pixels = 255 * np.clip(depth, 0, 1)
 
         return pixels
