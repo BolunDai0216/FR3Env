@@ -1,18 +1,9 @@
-import time
-
-import matplotlib.pyplot as plt
-import mujoco
 import numpy as np
 import pinocchio as pin
 from ndcurves import SE3Curve
 
 from FR3Env.controller import DiffIK
 from FR3Env.fr3_mj_env import FR3MuJocoEnv
-
-
-def show_depth_img(pixels):
-    plt.imshow(pixels.astype(np.uint8))
-    plt.show()
 
 
 def main():
@@ -28,9 +19,6 @@ def main():
     curve = SE3Curve(T_init, T_end, t_init, t_end)
 
     controller = DiffIK()
-
-    renderer = mujoco.Renderer(env.model)
-    renderer.enable_depth_rendering()
 
     for i in range(12000):
         if not env.viewer.is_running():
@@ -48,13 +36,6 @@ def main():
         tau, finger_pos = _tau[:7], 0.0
 
         info = env.step(tau, finger_pos)
-        renderer.update_scene(env.data)
-        depth = renderer.render()
-
-        # process depth image
-        depth -= depth.min()
-        depth /= 2 * depth[depth <= 1].mean()
-        pixels = 255 * np.clip(depth, 0, 1)
 
         if i == 4000:
             T_init = pin.SE3(info["R_EE"].copy(), info["P_EE"].copy())

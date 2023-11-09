@@ -1,6 +1,7 @@
 import time
 from copy import deepcopy
 
+import matplotlib.pyplot as plt
 import mujoco
 import mujoco.viewer
 import numpy as np
@@ -31,6 +32,7 @@ class FR3MuJocoEnv:
         self.model.opt.gravity[2] = -9.81
         self.jacobian_frame = pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
         self.EE_FRAME_ID = self.pin_robot.model.getFrameId("fr3_hand_tcp")
+        self.renderer = None
 
     def reset(self):
         self.q_nominal = np.array(
@@ -112,3 +114,22 @@ class FR3MuJocoEnv:
         nle = self.pin_robot.nle(q, dq)
 
         return M, Minv, nle
+
+    def get_depth_image(self):
+        if self.renderer is None:
+            self.renderer = mujoco.Renderer(self.model)
+            self.renderer.enable_depth_rendering()
+
+        self.renderer.update_scene(self.data)
+        depth = self.renderer.render()
+
+        # process depth image
+        depth -= depth.min()
+        depth /= 2 * depth[depth <= 1].mean()
+        pixels = 255 * np.clip(depth, 0, 1)
+
+        return pixels
+
+    def show_depth_img(self, pixels):
+        plt.imshow(pixels.astype(np.uint8))
+        plt.show()
