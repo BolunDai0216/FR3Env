@@ -45,21 +45,21 @@ class FR3MuJocoEnv:
         self.data.qpos[7] = 0.0
         self.data.qpos[8] = 0.0
 
-        q, dq = self.data.qpos.copy(), self.data.qvel.copy()
+        q, dq = self.data.qpos[:9].copy(), self.data.qvel[:9].copy()
         self.update_pinocchio(q, dq)
         info = self.get_info(q, dq)
 
         return info
 
     def step(self, tau, finger_pos):
-        finger_control = finger_pos * np.ones(2) - self.data.qpos[7:]
+        finger_control = finger_pos * np.ones(2) - self.data.qpos[7:9]
         frc_applied = np.append(tau, finger_control)
 
-        self.data.qfrc_applied = frc_applied
+        self.data.qfrc_applied[:9] = frc_applied
         mujoco.mj_step(self.model, self.data)
         self.viewer.sync()
 
-        q, dq = self.data.qpos.copy(), self.data.qvel.copy()
+        q, dq = self.data.qpos[:9].copy(), self.data.qvel[:9].copy()
         self.update_pinocchio(q, dq)
         info = self.get_info(q, dq)
 
