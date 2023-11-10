@@ -133,3 +133,6 @@ dmypy.json
 
 # MuJoCo
 MUJOCO_LOG.txt
+
+# Data
+data/
