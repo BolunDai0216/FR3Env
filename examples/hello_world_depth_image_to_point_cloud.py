@@ -1,7 +1,6 @@
 import numpy as np
 import pinocchio as pin
 from ndcurves import SE3Curve
-import open3d as o3d
 
 from FR3Env.controller import DiffIK
 from FR3Env.fr3_mj_env import FR3MuJocoEnv
@@ -40,6 +39,8 @@ def main():
 
         # pixels = env.get_depth_image(camera="franka_camera")
         # depth = env.renderer.render()
+        # np.save("./data/depth.npy", depth)
+        # exit()
 
         if i == 4000:
             T_init = pin.SE3(info["R_EE"].copy(), info["P_EE"].copy())
