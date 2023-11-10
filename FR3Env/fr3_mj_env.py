@@ -26,6 +26,10 @@ class FR3MuJocoEnv:
         if render:
             self.viewer = mujoco.viewer.launch_passive(self.model, self.data)
             self.render = True
+            self.viewer.cam.distance = 3.0
+            self.viewer.cam.azimuth = 90
+            self.viewer.cam.elevation = -45
+            self.viewer.cam.lookat[:] = np.array([0.0, -0.25, 0.824])
         else:
             self.render = False
 

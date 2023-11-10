@@ -1,6 +1,5 @@
 import numpy as np
 import pinocchio as pin
-import mujoco
 from ndcurves import SE3Curve
 
 from FR3Env.controller import DiffIK
