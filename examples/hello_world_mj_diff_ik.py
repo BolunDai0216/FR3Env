@@ -7,7 +7,7 @@ from FR3Env.fr3_mj_env import FR3MuJocoEnv
 
 
 def main():
-    env = FR3MuJocoEnv(xml_name="fr3_on_table")
+    env = FR3MuJocoEnv(xml_name="fr3_on_table_with_bounding_boxes")
     info = env.reset()
 
     T_init = pin.SE3(info["R_EE"].copy(), info["P_EE"].copy())
