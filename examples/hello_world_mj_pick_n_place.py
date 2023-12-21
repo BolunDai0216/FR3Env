@@ -4,6 +4,7 @@ from ndcurves import SE3Curve
 
 from FR3Env.controller import DiffIK
 from FR3Env.fr3_mj_env import FR3MuJocoEnv
+import time
 
 
 def main():
